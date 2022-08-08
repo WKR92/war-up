@@ -93,7 +93,8 @@ export default function Auth() {
 
   const sendEmailLink = async () => {
     const actionCodeSettings = {
-      url: "https://wkr92.github.io/war-up/",
+      // url: "https://wkr92.github.io/war-up/",
+      url: 'http://localhost:5173/',
       handleCodeInApp: true,
     };
 
@@ -214,6 +215,7 @@ export default function Auth() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Button
+          onKeyDown={async () => await sendEmailLink()}
           className={classes.emailSubmit}
           onClick={async () => await sendEmailLink()}
         >
