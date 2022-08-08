@@ -59,11 +59,11 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
   const [improve, setImprove] = useState(false);
   const user = useSelector((state: RootState) => state.user);
   const array = champ[arrayName as keyof typeof champ] as string[];
-  const expRule = parseFloat(champ.exp) < 100
+  const expRule = champ.exp < 100
   const addItemRule =
     arrayName === "inventory"
       ? user.email === champ.user && user.role === "BG"
-      : user.email === champ.user && user.role === "BG" && parseFloat(champ.exp) >= 100;
+      : user.email === champ.user && user.role === "BG" && champ.exp >= 100;
 
   const dispatchAction = () => {
     switch (arrayName) {

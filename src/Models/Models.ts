@@ -58,7 +58,7 @@ export interface Champion {
   user: string;
   base: Stats;
   add: Stats;
-  exp: string;
+  exp: number;
   inventory: string[];
   name: string;
   img?: string;
@@ -113,7 +113,7 @@ export interface CreateChampionFormValues {
   inventory: string[];
   id: string;
   img: string;
-  exp: string;
+  exp: number;
   user: string;
 
   baseWW: number;

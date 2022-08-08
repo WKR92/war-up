@@ -93,7 +93,7 @@ export default function Auth() {
 
   const sendEmailLink = async () => {
     const actionCodeSettings = {
-      url: "http://localhost:5173/",
+      url: "https://wkr92.github.io/war-up/",
       handleCodeInApp: true,
     };
 

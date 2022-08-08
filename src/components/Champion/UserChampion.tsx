@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { Box, Button, Group, TextInput, createStyles } from "@mantine/core";
+import { Box, Button, Group, TextInput, Input, createStyles } from "@mantine/core";
 import { doc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firabase/sdk";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import ChampionArray from "./ChampionArray";
 import ChampionMoney from "./ChampionMoney";
 import ChampionStats from "./ChampionStats";
 import { getStore } from "../../services/storageService";
-import isEqual from 'lodash.isequal';
+import isEqual from "lodash.isequal";
 import { showNotification } from "@mantine/notifications";
 import DeleteChampionModal from "./DeleteChampionModal";
 import ChampionImage from "./ChampionImage";
@@ -20,6 +20,9 @@ const useStyles = createStyles(() => ({
   },
   expInput: {
     width: "140px",
+  },
+  updateHeroBtn: {
+    marginTop: "1rem",
   },
 }));
 
@@ -33,8 +36,8 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   const champions = useSelector((state: RootState) => state.champions);
   const user = useSelector((state: RootState) => state.user);
   const docRef = doc(db, "Champions", champ.id);
-  const [champFormStore, setChampFromStore] = useState({} as Champion);
-  const [exp, setExp] = useState("");
+  const [champFromStore, setChampFromStore] = useState({} as Champion);
+  const [exp, setExp] = useState('');
   const ruleOfDisplay = user.email === champ.user;
   const champBeforeChange = useMemo(
     () => champions.filter((champ: Champion) => champ.user === user.email)[0],
@@ -42,7 +45,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   );
 
   const updateChampion = async () => {
-    await setDoc(docRef, champFormStore);
+    await setDoc(docRef, champFromStore);
     showNotification({
       message: "Hero changes saved",
       autoClose: 5000,
@@ -51,12 +54,12 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   };
 
   const updateExp = async () => {
-    if (parseFloat(exp) > 0) {
+    if (parseInt(exp) > 0) {
       const docRef = doc(db, "Champions", champ.id);
-      const data = { exp };
+      const data = { exp: parseInt(exp) };
       await updateDoc(docRef, data);
     }
-    setExp("");
+    setExp('');
     return showNotification({
       message: `Exp given to ${champ.name}`,
       autoClose: 5000,
@@ -113,14 +116,14 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
       <ChampionMoney champ={champ} />
       {user.role === "MP" && (
         <Group className={classes.expContainer}>
-          <TextInput
+          <Input
             placeholder="experience"
             value={exp}
-            onChange={(e) => setExp(e.target.value)}
+            onChange={(e: any) => setExp(e.target.value)}
             className={classes.expInput}
-            type="number"
           />
-          <Button disabled={exp === ""} onClick={() => updateExp()}>
+          <button onClick={()=>console.log(exp)}>qwe</button>
+          <Button disabled={parseInt(exp) === 0 || exp === undefined || exp === null} onClick={() => updateExp()}>
             Give
           </Button>
         </Group>
@@ -128,7 +131,8 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
 
       {ruleOfDisplay && (
         <Button
-          disabled={Object.keys(champFormStore).length > 0}
+          className={classes.updateHeroBtn}
+          disabled={Object.keys(champFromStore).length > 0}
           onClick={() => updateChampion()}
         >
           Update Hero
