@@ -79,12 +79,12 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   const storedChamp = JSON.parse(getStore("CHAMP") || "");
-  //   if (!isEqual(champBeforeChange, storedChamp)) {
-  //     setChampFromStore(storedChamp);
-  //   }
-  // }, [champ]);
+  useEffect(() => {
+    const storedChamp = JSON.parse(getStore("CHAMP") || "");
+    if (!isEqual(champBeforeChange, storedChamp)) {
+      setChampFromStore(storedChamp);
+    }
+  }, [champ]);
 
   // useEffect(() => {
   //   window.addEventListener("beforeunload", setChampionUpdate);
