@@ -1,26 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Text,
   TextInput,
-  Input,
   Button,
-  Group,
   Box,
   createStyles,
-  Modal,
   Checkbox,
+  Group,
 } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
-import { Champion } from "../../Models/Models";
-import { v4 as uuidv4 } from "uuid";
-import { RootState } from "../../redux/store/store";
-import { showNotification } from "@mantine/notifications";
-import * as championActions from "../../redux/actions/champion/championActions";
-import { db } from "../../firabase/sdk";
-import { collection, getDocs } from "firebase/firestore";
+import { Champion, BattleMember } from "../../Models/Models";
 import { useForm } from "@mantine/form";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { IconSquareMinus } from "@tabler/icons";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = createStyles(() => ({
   title: {
@@ -40,37 +29,82 @@ const useStyles = createStyles(() => ({
   },
   submitFormBtn: {
     marginTop: "1rem",
-    width: "125px",
+    width: "45%",
+    marginBottom: "-8px",
+    height: "35px",
   },
   showBtn: {
     marginBottom: "1rem",
+    width: "100%",
+  },
+  showBtnBeforeOpen: {
+    width: "100%",
   },
   enemiesInput: {
-    width: "125px",
+    width: "45%",
+  },
+  box: {
+    width: "100%",
+    maxWidth: "376px",
+    justifyContent: "space-around",
+  },
+  submitGroup: {
+    gap: "0",
+    justifyContent: "space-around",
   },
 }));
 
 type IProps = {
   initialFormValues: Record<string, never>;
   heros: Champion[];
+  setBattleFormResult: React.Dispatch<React.SetStateAction<BattleMember[]>>;
 };
 
-const BattleForm: React.FC<IProps> = ({ initialFormValues, heros }) => {
+const BattleForm: React.FC<IProps> = ({
+  initialFormValues,
+  heros,
+  setBattleFormResult,
+}) => {
   const { classes } = useStyles();
   const [showSelectPLayers, setShowSelectPlayers] = useState(false);
+  const [numOfSelectedPlayers, setNumOfSelectedPlayers] = useState(0);
 
   const form = useForm({
     initialValues: initialFormValues,
   });
 
-  useEffect(()=>{
-    console.log('initialFormValues', initialFormValues)
-  }, [])
+  const handleSubmit = (e: React.SyntheticEvent, form: any) => {
+    e.preventDefault();
+    const values = form.values;
+    const formResult: BattleMember[] = [];
+    const enemies = values.numberOfEnemies;
+    let i = 0;
+    while (i < enemies) {
+      formResult.push({ name: `enemy${i + 1}`, id: uuidv4() });
+      i++;
+    }
+    delete values.numberOfEnemies;
+    const players = values;
+    const selectedPlayers = Object.keys(players).filter((key) => players[key]);
+    selectedPlayers.forEach((name) =>
+      heros.map((hero: Champion) => {
+        if (hero.name === name) formResult.push(hero);
+      })
+    );
+    values.numberOfEnemies = enemies;
+    setBattleFormResult(formResult);
+  };
+
+  useEffect(() => {
+    const players = form.values;
+    const selectedPlayers = Object.keys(players).filter((key) => players[key]);
+    setNumOfSelectedPlayers(selectedPlayers.length);
+  }, [form.values]);
 
   return (
-    <Box>
+    <Box className={classes.box}>
       <h2 className={classes.title}>War time!</h2>
-      <form>
+      <form onSubmit={(e: React.SyntheticEvent) => handleSubmit(e, form)}>
         <Box
           className={
             showSelectPLayers
@@ -79,10 +113,12 @@ const BattleForm: React.FC<IProps> = ({ initialFormValues, heros }) => {
           }
         >
           <Button
-            className={showSelectPLayers ? classes.showBtn : undefined}
+            className={
+              showSelectPLayers ? classes.showBtn : classes.showBtnBeforeOpen
+            }
             onClick={() => setShowSelectPlayers(!showSelectPLayers)}
           >
-            Select players
+            Select players ({numOfSelectedPlayers})
           </Button>
           {showSelectPLayers &&
             heros.length > 0 &&
@@ -92,18 +128,20 @@ const BattleForm: React.FC<IProps> = ({ initialFormValues, heros }) => {
                 className={classes.checkbox}
                 label={hero.name}
                 {...form.getInputProps(hero.name, { type: "checkbox" })}
-                />
+              />
             ))}
         </Box>
-        <TextInput
-          className={classes.enemiesInput}
-          label="Enemies number"
-          type="number"
-          {...form.getInputProps("numberOfEnemies")}
-        />
-        <Button color="green" className={classes.submitFormBtn}>
-          Submit
-        </Button>
+        <Group className={classes.submitGroup}>
+          <TextInput
+            className={classes.enemiesInput}
+            label="Number of enemies"
+            type="number"
+            {...form.getInputProps("numberOfEnemies")}
+          />
+          <Button type="submit" color="green" className={classes.submitFormBtn}>
+            Submit
+          </Button>
+        </Group>
       </form>
     </Box>
   );

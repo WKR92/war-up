@@ -13,7 +13,11 @@ import { setStore } from "../../services/storageService";
 const useStyles = createStyles(() => ({
   title: {
     margin: '10px 0'
-  }
+  },
+  container: {
+    width: "100%",
+    maxWidth: "376px",
+  },
 }));
 
 export default function ChampionDashboard() {
@@ -47,7 +51,7 @@ export default function ChampionDashboard() {
   }, [champions]);
 
   return (
-    <Box>
+    <Box className={classes.container}>
       <h2 className={classes.title}>Hero dashboard</h2>
       {Object.keys(champ).length > 0 ? (
         <UserChampion champ={champ} setChamp={setChamp} />

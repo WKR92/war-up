@@ -70,7 +70,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
       inventory: [],
       id: "",
       img: "",
-      exp: 0,
+      exp: '',
       user: "",
 
       baseWW: 0,
@@ -193,7 +193,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
       },
       id: "",
       img: values.img,
-      exp: 0,
+      exp: '0',
       user: user?.email ?? "",
     };
 

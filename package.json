@@ -24,7 +24,6 @@
     "@testing-library/user-event": "^14.3.0",
     "@types/eslint": "^8.4.5",
     "@types/jest": "^28.1.6",
-    "@types/lodash": "^4.14.182",
     "@types/prettier": "^2.6.3",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-redux": "^7.1.24",
@@ -43,6 +42,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-react": "^7.18.6",
+    "@types/lodash": "^4.14.182",
     "@types/react": "^18.0.15",
     "@types/react-addons-update": "^0.14.21",
     "@types/react-dom": "^18.0.6",

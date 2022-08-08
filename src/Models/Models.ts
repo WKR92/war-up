@@ -21,28 +21,28 @@ export type championAction =
     }
   | {
       type: "REMOVE_ITEM";
-      payload: { champUser: string; arrayName: string ; arrayItem: string };
+      payload: { champUser: string; arrayName: string; arrayItem: string };
     }
   | {
       type: "ADD_ITEM";
       payload: { champUser: string; arrayName: string; arrayItem: string };
     }
   | {
-    type: "CHANGE_MONEY",
-    payload: { champUser: string, operation: string}
-  }
+      type: "CHANGE_MONEY";
+      payload: { champUser: string; operation: string };
+    }
   | {
-    type: "ADD_SKILL",
-    payload: { champUser: string, skill: string}
-  }
+      type: "ADD_SKILL";
+      payload: { champUser: string; skill: string };
+    }
   | {
-    type: "IMPROVE_SKILL",
-    payload: { champUser: string, skill: string}
-  }
+      type: "IMPROVE_SKILL";
+      payload: { champUser: string; skill: string };
+    }
   | {
-    type: "CHAMPION_DELETED",
-    payload: {champId: string}
-  }
+      type: "CHAMPION_DELETED";
+      payload: { champId: string };
+    };
 
 export interface Campaign {
   name: string;
@@ -58,14 +58,14 @@ export interface Champion {
   user: string;
   base: Stats;
   add: Stats;
-  exp: number;
+  exp: string;
   inventory: string[];
   name: string;
   img?: string;
   money: number;
   abilities: string[];
   skills: any[];
-  id: string
+  id: string;
 }
 
 export interface Skills {
@@ -113,40 +113,42 @@ export interface CreateChampionFormValues {
   inventory: string[];
   id: string;
   img: string;
-  exp: number;
+  exp: string;
   user: string;
 
-  baseWW: number,
-  baseUS: number,
-  baseK: number,
-  baseODP: number,
-  baseZR: number,
-  baseINT: number,
-  baseSW: number,
-  baseOGL: number,
-  baseA: number,
-  baseZYW: number,
-  baseS: number,
-  baseWYT: number,
-  baseSZYB: number,
-  baseMAG: number,
-  basePO: number,
-  basePP: number,
+  baseWW: number;
+  baseUS: number;
+  baseK: number;
+  baseODP: number;
+  baseZR: number;
+  baseINT: number;
+  baseSW: number;
+  baseOGL: number;
+  baseA: number;
+  baseZYW: number;
+  baseS: number;
+  baseWYT: number;
+  baseSZYB: number;
+  baseMAG: number;
+  basePO: number;
+  basePP: number;
 
-  addWW: number,
-  addUS: number,
-  addK: number,
-  addODP: number,
-  addZR: number,
-  addINT: number,
-  addSW: number,
-  addOGL: number,
-  addA: number,
-  addZYW: number,
-  addS: number,
-  addWYT: number,
-  addSZYB: number,
-  addMAG: number,
-  addPO: number,
-  addPP: number,
+  addWW: number;
+  addUS: number;
+  addK: number;
+  addODP: number;
+  addZR: number;
+  addINT: number;
+  addSW: number;
+  addOGL: number;
+  addA: number;
+  addZYW: number;
+  addS: number;
+  addWYT: number;
+  addSZYB: number;
+  addMAG: number;
+  addPO: number;
+  addPP: number;
 }
+
+export type BattleMember = Champion | { name: string; id: string };

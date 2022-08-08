@@ -23,6 +23,16 @@ import * as userActions from "../../redux/actions/user/userActions";
 const useStyles = createStyles(() => ({
   headerGroup: {
     gap: "5px",
+    cursor: "pointer",
+  },
+  logOutHeaderGroup: {
+    gap: "5px",
+    cursor: "pointer",
+    marginLeft: "auto",
+    marginRight: "0",
+  },
+  headerMainContainer: {
+    width: "100%",
   },
 }));
 
@@ -113,18 +123,25 @@ const Shell: React.FC<IProps> = ({ children }) => {
             </MediaQuery>
 
             <MediaQuery query="(max-width: 400px)" styles={{ display: "none" }}>
-              <Group>
+              <Group className={classes.headerMainContainer}>
                 {user.role === "BG" ? (
                   <Group className={classes.headerGroup}>
-                    {<IconActivity size={16} stroke={2} />}
-                    <Text>Your hero</Text>
+                    <IconActivity size={16} stroke={2} />
+                    <Text onClick={() => navigate("/")}>Your hero</Text>
                   </Group>
                 ) : (
-                  <Text>War</Text>
+                  <Group className={classes.headerGroup}>
+                    <IconActivity size={16} stroke={2} />
+                    <Text onClick={() => navigate("/")}>War</Text>
+                  </Group>
                 )}
                 <Group className={classes.headerGroup}>
-                  {<IconActivity size={16} stroke={2} />}
-                  <Text>Team</Text>
+                  <IconActivity size={16} stroke={2} />
+                  <Text onClick={() => navigate("/champions")}>Team</Text>
+                </Group>
+                <Group className={classes.logOutHeaderGroup}>
+                  <IconLogout size={16} stroke={2} />
+                  <Text onClick={() => logOut()}>Log out</Text>
                 </Group>
               </Group>
             </MediaQuery>
