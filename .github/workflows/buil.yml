@@ -1,0 +1,17 @@
+name: deploy-build
+
+on: 
+  push:
+    branches:
+      - main
+    path:
+      - './'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install --force
+      - run: npm run build
