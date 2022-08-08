@@ -17,12 +17,12 @@ export default function championsReducer(
         (champion: Champion) => champion.user === action.payload.champUser
       );
       const index = newState.indexOf(championToChange[0]);
-      if (newState[index].exp < 100) return [...newState];
+      if (parseInt(newState[index].exp) < 100) return [...newState];
 
       const add = newState[index].add;
       const atr = action.payload.stat as keyof typeof add;
       add[atr] = add[atr] + 1;
-      newState[index].exp = newState[index].exp - 100;
+      newState[index].exp = (parseInt(newState[index].exp) - 100).toString();
       return [...newState];
     }
     case championsActionTypes.REMOVE_ITEM: {
@@ -51,7 +51,7 @@ export default function championsReducer(
       array.push(action.payload.arrayItem);
 
       if (action.payload.arrayName !== "inventory")
-        newState[index].exp = newState[index].exp - 100;
+        newState[index].exp = (parseInt(newState[index].exp) - 100).toString();
 
       return [...newState];
     }
@@ -85,10 +85,10 @@ export default function championsReducer(
       skills[newSkillName as keyof typeof skills] =
         newState[index].skills["skill" as keyof typeof skills];
       delete newState[index].skills["skill" as keyof typeof skills];
-      newState[index].exp = newState[index].exp - 100;
+      newState[index].exp = (parseInt(newState[index].exp) - 100).toString();
       return [...newState];
     }
-    case championsActionTypes.IMPROVE_SKILL: {      
+    case championsActionTypes.IMPROVE_SKILL: {
       const newState: Champion[] = JSON.parse(JSON.stringify(state));
       const championToChange = newState.filter(
         (champion: Champion) => champion.user === action.payload.champUser
@@ -101,11 +101,11 @@ export default function championsReducer(
       const skill = action.payload.skill as keyof typeof skills;
       if (skills[skill] === 30) return [...newState];
 
-      skills[skill] = skills[skill] + 10
-      newState[index].exp = newState[index].exp - 100;
+      skills[skill] = skills[skill] + 10;
+      newState[index].exp = (parseInt(newState[index].exp) - 100).toString();
       return [...newState];
     }
-    case championsActionTypes.CHAMPION_DELETED: {      
+    case championsActionTypes.CHAMPION_DELETED: {
       const newState: Champion[] = JSON.parse(JSON.stringify(state));
       const championToChange = newState.filter(
         (champion: Champion) => champion.id === action.payload.champId

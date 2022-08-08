@@ -9,7 +9,7 @@ import ChampionArray from "./ChampionArray";
 import ChampionMoney from "./ChampionMoney";
 import ChampionStats from "./ChampionStats";
 import { getStore } from "../../services/storageService";
-import isEqual from "lodash/isequal";
+import isEqual from 'lodash.isequal';
 import { showNotification } from "@mantine/notifications";
 import DeleteChampionModal from "./DeleteChampionModal";
 import ChampionImage from "./ChampionImage";

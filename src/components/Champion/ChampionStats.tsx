@@ -50,7 +50,7 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
   const [showStats, setShowStats] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [attribiute, setAttribiute] = useState("");
-  const canUserChangeChamp = user.email === champ.user && user.role === "BG" && champ.exp >= 100;
+  const canUserChangeChamp = user.email === champ.user && user.role === "BG" && parseInt(champ.exp) >= 100;
 
   const rows = elements.map((element) => (
     <tr key={element.stat}>
@@ -122,7 +122,7 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
   }, [champ]);
 
   const openModal = (atr: string) => {
-    if (champ.exp < 100) return;
+    if (parseInt(champ.exp) < 100) return;
     setAttribiute(atr);
     setShowModal(true);
   };
