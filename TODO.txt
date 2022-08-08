@@ -1,2 +1,2 @@
-1. hero image
-2. first onBeforeUnload hero save does not work
+1. Nie można otworzyć hero w teams
+2. Nie działa disabling button dla give exp 
