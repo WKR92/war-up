@@ -255,7 +255,7 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
                 <li key={uuidv4()}>
                   <Group>
                     <Text className={classes.arrayItem}>{item}</Text>{" "}
-                    {addItemRule && (
+                    {(addItemRule && arrayName === 'inventory') && (
                       <IconTrash
                         size={16}
                         stroke={2}
