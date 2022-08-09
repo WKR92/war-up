@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -69,7 +69,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   return (
     <Box>
       <h3>{champ.name}</h3>
-      <p>Exp: {champ.exp}</p>
+      {(user.email === champ.user || user.role === 'MP') && <p>Exp: {champ.exp}</p>}
       <ChampionStats champ={champ} />
       <ChampionArray champ={champ} arrayName="abilities" />
       <ChampionArray champ={champ} arrayName="skills" />

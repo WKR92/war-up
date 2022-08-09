@@ -166,7 +166,7 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
           <thead>
             <tr>
               <th>Stats</th>
-              <th>Val</th>
+              <th>Base</th>
               <th>Add</th>
               <th>Act</th>
               {canUserChangeChamp && <th>Buy</th>}

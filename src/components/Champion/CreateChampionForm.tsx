@@ -7,6 +7,7 @@ import {
   createStyles,
   Input,
   Table,
+  Text
 } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { IconTrash } from "@tabler/icons";
@@ -40,6 +41,9 @@ const useStyles = createStyles(() => ({
     height: "20px",
     "&:hover": { cursor: "pointer" },
   },
+  note: {
+    marginBottom: '1rem',
+  }
 }));
 
 type IProps = {
@@ -64,7 +68,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
   const form = useForm<CreateChampionFormValues>({
     initialValues: {
       name: "",
-      money: 0 as number,
+      money: 0,
       skills: [],
       abilities: [],
       inventory: [],
@@ -151,49 +155,49 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     }, {});
     const newChampion: Champion = {
       name: values.name,
-      money: values.money as number,
+      money: Number(values.money),
       skills: formatedSkills,
       abilities,
       inventory,
       base: {
-        ww: values.baseWW,
-        us: values.baseUS,
-        k: values.baseK,
-        odp: values.baseODP,
-        zr: values.baseZR,
-        int: values.baseINT,
-        sw: values.baseSW,
-        ogl: values.baseOGL,
-        a: values.baseA,
-        zyw: values.baseZYW,
-        s: values.baseS,
-        wyt: values.baseWYT,
-        szyb: values.baseSZYB,
-        mag: values.baseMAG,
-        po: values.basePO,
-        pp: values.basePP,
+        ww: Number(values.baseWW),
+        us: Number(values.baseUS),
+        k: Number(values.baseK),
+        odp: Number(values.baseODP),
+        zr: Number(values.baseZR),
+        int: Number(values.baseINT),
+        sw: Number(values.baseSW),
+        ogl: Number(values.baseOGL),
+        a: Number(values.baseA),
+        zyw: Number(values.baseZYW),
+        s: Number(values.baseS),
+        wyt: Number(values.baseWYT),
+        szyb: Number(values.baseSZYB),
+        mag: Number(values.baseMAG),
+        po: Number(values.basePO),
+        pp: Number(values.basePP),
       },
       add: {
-        ww: values.addWW,
-        us: values.addUS,
-        k: values.addK,
-        odp: values.addODP,
-        zr: values.addZR,
-        int: values.addINT,
-        sw: values.addSW,
-        ogl: values.addOGL,
-        a: values.addA,
-        zyw: values.addZYW,
-        s: values.addS,
-        wyt: values.addWYT,
-        szyb: values.addSZYB,
-        mag: values.addMAG,
-        po: values.addPO,
-        pp: values.addPP,
+        ww: Number(values.addWW),
+        us: Number(values.addUS),
+        k: Number(values.addK),
+        odp: Number(values.addODP),
+        zr: Number(values.addZR),
+        int: Number(values.addINT),
+        sw: Number(values.addSW),
+        ogl: Number(values.addOGL),
+        a: Number(values.addA),
+        zyw: Number(values.addZYW),
+        s: Number(values.addS),
+        wyt: Number(values.addWYT),
+        szyb: Number(values.addSZYB),
+        mag: Number(values.addMAG),
+        po: Number(values.addPO),
+        pp: Number(values.addPP),
       },
       id: "",
       img: values.img,
-      exp: 0,
+      exp: Number(0),
       user: user?.email ?? "",
     };
 
@@ -277,9 +281,15 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     <Box className={classes.outerContainer}>
       <h2>Create Champion</h2>
       <form onSubmit={(e) => createChampion(e, form)}>
-        <TextInput label="Name" required type="text" />
+        <TextInput label="Name" required type="text" {...form.getInputProps('name')}
+        />
         <Box>
           <h3>Stats</h3>
+          <Text className={classes.note}>Note: Base is your attribute value without any additional gains.
+            Add is everything you already added to the attribute (not what you COULD add).
+            So if you have ww: 35 because of 30 from dice rolls and 5 from bought class modifier
+            then you type 30 to base and 5 to add. Add is sum of all additions
+            (5 from class and 5 from ability? Type 10).</Text>
           <Table highlightOnHover className={classes.table}>
             <thead>
               <tr>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, createStyles } from "@mantine/core";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firabase/sdk";
 import * as championActions from "../../redux/actions/champion/championActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,13 +19,17 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export default function ChampionDashboard() {
+const ChampionDashboard: React.FC = () => {
   const { classes } = useStyles();
   const dispatch = useDispatch();
   const championsCollectionRef = collection(db, "Champions");
   const champions = useSelector((state: RootState) => state.champions);
   const user = useSelector((state: RootState) => state.user);
   const [champ, setChamp] = useState({} as Champion);
+
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0});
+  }, []);
 
   const getChampions = () => {
     getDocs(championsCollectionRef).then((snaphot) => {
@@ -59,3 +63,5 @@ export default function ChampionDashboard() {
     </Box>
   );
 }
+
+export default ChampionDashboard;
