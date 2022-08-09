@@ -42,6 +42,10 @@ export type championAction =
   | {
       type: "CHAMPION_DELETED";
       payload: { champId: string };
+    }
+  | {
+      type: "CHANGE_IMAGE";
+      payload: { champId: string; image: string };
     };
 
 export interface Campaign {
@@ -61,7 +65,7 @@ export interface Champion {
   exp: number;
   inventory: string[];
   name: string;
-  img?: string;
+  img: string;
   money: number;
   abilities: string[];
   skills: any[];

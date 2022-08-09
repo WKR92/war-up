@@ -63,8 +63,6 @@ const Team: React.FC = () => {
     const newTeam = champions.filter(
       (champ: Champion) => champ.user !== user.email
     );
-    champions.map((champ) => console.log(champ.name));
-    console.log(newTeam);
     newTeam.sort((a: Champion, b: Champion) => a.name.localeCompare(b.name));
     setTeam(newTeam);
   }, [champions]);

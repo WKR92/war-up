@@ -62,7 +62,7 @@ export default function championsReducer(
       );
       const index = newState.indexOf(championToChange[0]);
       if (action.payload.operation === "add")
-        newState[index].money = newState[index].money + 1;
+        newState[index].money = parseInt(newState[index].money.toString()) + 1;
       if (action.payload.operation === "sub") {
         if (newState[index].money === 0) return [...newState];
         newState[index].money = newState[index].money - 1;
@@ -88,7 +88,7 @@ export default function championsReducer(
       newState[index].exp = newState[index].exp - 100;
       return [...newState];
     }
-    case championsActionTypes.IMPROVE_SKILL: {      
+    case championsActionTypes.IMPROVE_SKILL: {
       const newState: Champion[] = JSON.parse(JSON.stringify(state));
       const championToChange = newState.filter(
         (champion: Champion) => champion.user === action.payload.champUser
@@ -101,17 +101,29 @@ export default function championsReducer(
       const skill = action.payload.skill as keyof typeof skills;
       if (skills[skill] === 30) return [...newState];
 
-      skills[skill] = skills[skill] + 10
+      skills[skill] = skills[skill] + 10;
       newState[index].exp = newState[index].exp - 100;
       return [...newState];
     }
-    case championsActionTypes.CHAMPION_DELETED: {      
+    case championsActionTypes.CHAMPION_DELETED: {
       const newState: Champion[] = JSON.parse(JSON.stringify(state));
       const championToChange = newState.filter(
         (champion: Champion) => champion.id === action.payload.champId
       );
       const index = newState.indexOf(championToChange[0]);
       newState.splice(index, 1);
+      return [...newState];
+    }
+    case championsActionTypes.CHANGE_IMAGE: {
+      const newState: Champion[] = JSON.parse(JSON.stringify(state));
+      const championToChange = newState.filter(
+        (champion: Champion) => { 
+          console.log('champion.id', champion.id)
+          console.log('action.payload.champId', action.payload.champId)
+           return champion.id === action.payload.champId}
+      );
+      const index = newState.indexOf(championToChange[0]);
+      newState[index].img = action.payload.image;
       return [...newState];
     }
     default:

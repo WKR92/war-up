@@ -103,7 +103,6 @@ const MPDashboard: React.FC = () => {
       ) : null}
       <RollDicesArea />
       <BattleFlow
-        setHeros={setHeros}
         battleFormResult={battleFormResult}
         setBattleFormResult={setBattleFormResult}
       />

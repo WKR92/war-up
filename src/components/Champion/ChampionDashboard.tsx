@@ -8,11 +8,10 @@ import { RootState } from "../../redux/store/store";
 import UserChampion from "./UserChampion";
 import { Champion } from "../../Models/Models";
 import CreateChampionForm from "./CreateChampionForm";
-import { setStore } from "../../services/storageService";
 
 const useStyles = createStyles(() => ({
   title: {
-    margin: '10px 0'
+    margin: "10px 0",
   },
   container: {
     width: "100%",
@@ -46,7 +45,6 @@ export default function ChampionDashboard() {
     );
     if (userChamp.length > 0) {
       setChamp(userChamp[0]);
-      setStore("CHAMP", JSON.stringify(userChamp[0]));
     }
   }, [champions]);
 

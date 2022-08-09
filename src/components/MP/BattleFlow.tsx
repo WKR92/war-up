@@ -45,7 +45,6 @@ const useStyles = createStyles(() => ({
 }));
 
 type IProps = {
-  setHeros: React.Dispatch<React.SetStateAction<Champion[]>>;
   setBattleFormResult: React.Dispatch<React.SetStateAction<BattleMember[]>>;
   battleFormResult: BattleMember[];
 };
@@ -56,7 +55,6 @@ type InitMember = {
 };
 
 const BattleFlow: React.FC<IProps> = ({
-  setHeros,
   battleFormResult,
   setBattleFormResult,
 }) => {
@@ -79,6 +77,8 @@ const BattleFlow: React.FC<IProps> = ({
 
   const changeMemberToDone = (id: string) => {
     const li = document.querySelector(`#li-${id}`) as HTMLLIElement;
+    if (li.style.backgroundColor === "grey")
+      return (li.style.backgroundColor = "#1a1b1e");
     li.style.backgroundColor = "grey";
   };
 

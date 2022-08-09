@@ -64,7 +64,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
   const form = useForm<CreateChampionFormValues>({
     initialValues: {
       name: "",
-      money: 13,
+      money: 0 as number,
       skills: [],
       abilities: [],
       inventory: [],
@@ -151,7 +151,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     }, {});
     const newChampion: Champion = {
       name: values.name,
-      money: values.money,
+      money: values.money as number,
       skills: formatedSkills,
       abilities,
       inventory,

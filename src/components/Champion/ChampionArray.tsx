@@ -15,16 +15,18 @@ import { v4 as uuidv4 } from "uuid";
 import { RootState } from "../../redux/store/store";
 import { showNotification } from "@mantine/notifications";
 import { IconTrash } from "@tabler/icons";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
   container: {
-    border: '1px solid orange',
-    borderRadius: '5px',
-    marginBottom: '1rem',
-    padding: '1rem'
+    border: "1px solid orange",
+    borderRadius: "5px",
+    marginBottom: "1rem",
+    padding: "1rem",
   },
   arrayItem: {
-    maxWidth: '80%'
+    maxWidth: "80%",
   },
   deleteIcon: {
     width: "20px",
@@ -36,8 +38,8 @@ const useStyles = createStyles(() => ({
     margin: "auto",
   },
   showBtn: {
-    marginBottom: '.5rem',
-    width: '140px'
+    marginBottom: ".5rem",
+    width: "140px",
   },
   textInput: {
     width: "150px",
@@ -59,7 +61,8 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
   const [improve, setImprove] = useState(false);
   const user = useSelector((state: RootState) => state.user);
   const array = champ[arrayName as keyof typeof champ] as string[];
-  const expRule = champ.exp < 100
+  const expRule = champ.exp < 100;
+  const docRef = doc(db, "Champions", champ.id);
   const addItemRule =
     arrayName === "inventory"
       ? user.email === champ.user && user.role === "BG"
@@ -77,6 +80,8 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
           });
           return setShowModal(false);
         }
+
+        updateArrayInDb();
         dispatch(championActions.addItem(champ.user, arrayName, arrayItem));
         showNotification({
           message: "Skill added",
@@ -108,6 +113,8 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
             setImprove(false);
             return setShowModal(false);
           }
+
+          updateSkillDevelopmentInDb();
           dispatch(championActions.improveSkill(champ.user, skill));
           showNotification({
             message: `${skill} improved by 10`,
@@ -124,6 +131,8 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
             });
             return setShowModal(false);
           }
+
+          updateArrayInDb();
           dispatch(championActions.addSkill(champ.user, arrayItem));
           showNotification({
             message: "Skill added",
@@ -135,6 +144,7 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
         break;
       }
       case "inventory": {
+        updateArrayInDb();
         dispatch(championActions.addItem(champ.user, arrayName, arrayItem));
         showNotification({
           message: "Item added",
@@ -160,8 +170,6 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
         color: "red",
       });
 
-    console.log("verification called");
-
     switch (arrayName) {
       case "abilities": {
         if (expRule) return;
@@ -184,9 +192,50 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
     }
   };
 
+  const deleteFromArrayInDb = async (item: string) => {
+    if (arrayName === "inventory") {
+      await updateDoc(docRef, { inventory: arrayRemove(item) });
+    }
+  };
+
+  const updateSkillDevelopmentInDb = async () => {
+    const attrPath = `skills.${skill}`;
+    const data = {
+      [attrPath]: champ.skills[skill as keyof typeof champ.skills] + 10,
+    };
+    await updateDoc(docRef, data);
+    const exp = { exp: champ.exp - 100 };
+    await updateDoc(docRef, exp);
+  };
+
+  const updateArrayInDb = async () => {
+    if (arrayName === "abilities") {
+      await updateDoc(docRef, { abilities: arrayUnion(arrayItem) });
+      const exp = { exp: champ.exp - 100 };
+      await updateDoc(docRef, exp);
+      return;
+    }
+
+    if (arrayName === "skills") {
+      const skillPath = `skills.${arrayItem}`;
+      const data = { [skillPath]: 0 };
+      await updateDoc(docRef, data);
+      const exp = { exp: champ.exp - 100 };
+      await updateDoc(docRef, exp);
+      return;
+    }
+
+    if (arrayName === "inventory") {
+      await updateDoc(docRef, { inventory: arrayUnion(arrayItem) });
+    }
+  };
+
   return (
     <Box className={showArray ? classes.container : undefined}>
-      <Button className={classes.showBtn} onClick={() => setShowArray(!showArray)}>
+      <Button
+        className={classes.showBtn}
+        onClick={() => setShowArray(!showArray)}
+      >
         {!showArray ? "Show" : "Close"} {arrayName}
       </Button>
       {showArray && (
@@ -211,6 +260,7 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
                         size={16}
                         stroke={2}
                         onClick={() => {
+                          deleteFromArrayInDb(item);
                           dispatch(
                             championActions.removeItem(
                               champ.user,
@@ -251,7 +301,7 @@ const ChampionArray: React.FC<IProps> = ({ champ, arrayName }) => {
               </Group>
             </Box>
           )}
-          {(addItemRule && arrayName === 'skills') && (
+          {addItemRule && arrayName === "skills" && (
             <Box>
               <p>Improve skill:</p>
               <Group>

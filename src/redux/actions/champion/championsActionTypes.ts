@@ -6,3 +6,4 @@ export const ADD_ITEM = "ADD_ITEM";
 export const CHANGE_MONEY = "CHANGE_MONEY";
 export const ADD_SKILL = "ADD_SKILL";
 export const IMPROVE_SKILL = "IMPROVE_SKILL";
+export const CHANGE_IMAGE = "CHANGE_IMAGE";

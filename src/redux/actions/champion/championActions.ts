@@ -6,7 +6,8 @@ import {
   CHANGE_MONEY,
   ADD_SKILL,
   IMPROVE_SKILL,
-  CHAMPION_DELETED
+  CHAMPION_DELETED,
+  CHANGE_IMAGE
 } from "./championsActionTypes";
 import { Champion } from "../../../Models/Models";
 
@@ -71,5 +72,12 @@ export const improveSkill = (champUser: string, skill: string) => {
   return {
     type: IMPROVE_SKILL,
     payload: { champUser, skill },
+  };
+};
+
+export const changeImage = (champId: string, image: string) => {
+  return {
+    type: CHANGE_IMAGE,
+    payload: { champId, image },
   };
 };

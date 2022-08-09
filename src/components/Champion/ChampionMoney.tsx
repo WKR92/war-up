@@ -4,23 +4,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Champion } from "../../Models/Models";
 import * as championActions from "../../redux/actions/champion/championActions";
 import { RootState } from "../../redux/store/store";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
   moneyBox: {
-    marginRight: '.25rem'
+    marginRight: ".25rem",
   },
   btn: {
     width: "25px",
     color: "orange",
-    textAlign: 'center'
+    textAlign: "center",
+    cursor: "pointer",
   },
   group: {
-    height: '36px',
+    height: "36px",
     gap: "6px",
   },
   btnsGroup: {
-    gap: '0px'
-  }
+    gap: "0px",
+  },
 }));
 
 type IProps = {
@@ -33,6 +36,19 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
   const { classes } = useStyles();
   const canUserChangeChamp = user.email === champ.user && user.role === "BG";
 
+  const updateMoneyInDb = async (operation: string) => {
+    const docRef = doc(db, "Champions", champ.id);
+    const data = {
+      money:
+        operation === "add"
+          ? parseInt(champ.money.toString()) + 1
+          : parseInt(champ.money.toString()) === 0
+          ? 0
+          : champ.money - 1,
+    };
+    await updateDoc(docRef, data);
+  };
+
   return (
     <Group className={classes.group}>
       <Text>Money:</Text>
@@ -41,9 +57,10 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
         {canUserChangeChamp && (
           <Text
             className={classes.btn}
-            onClick={() =>
-              dispatch(championActions.changeMoney(champ.user, "add"))
-            }
+            onClick={() => {
+              updateMoneyInDb("add");
+              dispatch(championActions.changeMoney(champ.user, "add"));
+            }}
           >
             +
           </Text>
@@ -51,9 +68,10 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
         {canUserChangeChamp && (
           <Text
             className={classes.btn}
-            onClick={() =>
-              dispatch(championActions.changeMoney(champ.user, "sub"))
-            }
+            onClick={() => {
+              updateMoneyInDb("sub");
+              dispatch(championActions.changeMoney(champ.user, "sub"));
+            }}
           >
             -
           </Text>

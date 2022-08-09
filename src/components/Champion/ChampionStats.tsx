@@ -6,6 +6,8 @@ import { Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Button, Box, createStyles, Modal, Group } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -34,7 +36,7 @@ const useStyles = createStyles(() => ({
   },
   showBtn: {
     marginBottom: ".5rem",
-    width: '140px'
+    width: "140px",
   },
 }));
 
@@ -49,8 +51,9 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
   const dispatch = useDispatch();
   const [showStats, setShowStats] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [attribiute, setAttribiute] = useState("");
-  const canUserChangeChamp = user.email === champ.user && user.role === "BG" && champ.exp >= 100;
+  const [attribute, setAttribute] = useState("");
+  const canUserChangeChamp =
+    user.email === champ.user && user.role === "BG" && champ.exp >= 100;
 
   const rows = elements.map((element) => (
     <tr key={element.stat}>
@@ -123,14 +126,27 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
 
   const openModal = (atr: string) => {
     if (champ.exp < 100) return;
-    setAttribiute(atr);
+    setAttribute(atr);
     setShowModal(true);
   };
 
+  const updateAttrInDb = async () => {
+    const docRef = doc(db, "Champions", champ.id);
+    const element = Object.values(elements).filter(
+      (elem: ChampTableElement) => elem.stat === attribute.toUpperCase()
+    );
+    const changedAttr = element[0].act + 1;
+    const attrPath = `add.${attribute}`;
+    const data = { [attrPath]: changedAttr };
+    await updateDoc(docRef, data);
+    const exp = { exp: champ.exp - 100 };
+    await updateDoc(docRef, exp);
+  };
+
   const dispatchAction = () => {
-    dispatch(championActions.changeChampionStat(attribiute, champ.user));
+    dispatch(championActions.changeChampionStat(attribute, champ.user));
     showNotification({
-      message: `${attribiute.toUpperCase()} + 1`,
+      message: `${attribute.toUpperCase()} + 1`,
       autoClose: 5000,
       color: "cyan",
     });
@@ -171,6 +187,7 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
           <Button
             onClick={() => {
               dispatchAction();
+              updateAttrInDb();
             }}
           >
             Yes
