@@ -42,6 +42,10 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   const [exp, setExp] = useState("");
   const ruleOfDisplay = user.email === champ.user;
 
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0});
+  }, []);
+
   const updateExp = async () => {
     if (parseInt(exp) > 0) {
       const docRef = doc(db, "Champions", champ.id);

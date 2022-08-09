@@ -27,10 +27,6 @@ const ChampionDashboard: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [champ, setChamp] = useState({} as Champion);
 
-  useEffect(() => {
-    window.scrollTo({top: 0, left: 0});
-  }, []);
-
   const getChampions = () => {
     getDocs(championsCollectionRef).then((snaphot) => {
       // eslint-disable-next-line

@@ -88,7 +88,7 @@ const ChampionImage: React.FC<IProps> = ({ champ }) => {
               <Button
                 onClick={() => {
                   dispatch(changeImage(champ.id, img));
-                  changeHeroImageInDb();
+                  img !== '' && changeHeroImageInDb();
                 }}
               >
                 Change
