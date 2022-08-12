@@ -8,69 +8,188 @@ import {
   createStyles,
   Modal,
 } from "@mantine/core";
+import { zonnCardsData } from "./cardsData";
 
 const useStyles = createStyles(() => ({
-  outerContainer: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   cardContainer: {
-    width: "200px",
-    height: "300px",
-    border: '1px solid white',
-    backgroundImage: 'url("https://images.unsplash.com/photo-1585508889431-a1d0d9c5a324?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80")',
-    backgroundSize: '200px 300px',
+    margin: 'auto',
+    height: "auto",
+    border: '1px solid #1A1B1E',
+    marginBottom: '2rem',
     position: 'relative',
+    width: "95%",
+    maxWidth: "376px",
   },
-  circle: {
-    width: '60px',
-    height: '60px',
+  topCircle: {
+    width: '70px',
+    height: '70px',
     borderRadius: '50%',
     position: 'absolute',
     top: '-25px',
     left: '-25px',
-    backgroundColor: 'purple',
+    backgroundColor: '#003366',
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
   },
-  circleData: {
+  topCircleData: {
     marginLeft: '18px',
-    marginTop: '18px'
+    marginTop: '18px',
+    fontWeight: 'bold',
+    fontSize: '1.5rem'
+  },
+  bottomCircle: {
+    width: '70px',
+    height: '70px',
+    borderRadius: '50%',
+    position: 'absolute',
+    bottom: '-25px',
+    right: '-25px',
+    backgroundColor: '#570861',
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomCircleData: {
+    marginRight: '18px',
+    marginBottom: '18px',
+    fontWeight: 'bold',
+    fontSize: '1.5rem'
+  },
+  blackBoxLeft: {
+    position: 'absolute',
+    width: '50px',
+    height: '50px',
+    top: '-1px',
+    left: '-51px',
+    backgroundColor: '#1A1B1E'
+  },
+  blackBoxTop: {
+    position: 'absolute',
+    width: '150px',
+    height: '25px',
+    top: '-26px',
+    left: '-31px',
+    backgroundColor: '#1A1B1E'
+  },
+  blackBoxRight: {
+    position: 'absolute',
+    width: '50px',
+    height: '50px',
+    bottom: '-1px',
+    right: '-51px',
+    backgroundColor: '#1A1B1E'
+  },
+  blackBoxBottom: {
+    position: 'absolute',
+    width: '150px',
+    height: '25px',
+    bottom: '-26px',
+    right: '-31px',
+    backgroundColor: '#1A1B1E'
   },
   name: {
-    width: '80%',
+    width: '85%',
     color: "black",
     margin: 'auto',
-    backgroundColor: 'brown',
+    backgroundColor: '-webkit-linear-gradient(to right, #334d50, #cbcaa5)',
+    backgroundImage: 'linear-gradient(to right, #334d50, #cbcaa5)',
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: '2rem',
-    height: '2rem'
+    marginTop: '1rem',
+    height: '2.5rem',
+    padding: '.25rem',
+    border: '1px solid black',
+  },
+  mainImgContainer: {
+    width: '85%',
+    margin: 'auto',
+    marginTop: '.5rem',
+    height: '250px',
+    marginBottom: '.5rem',
+    border: '1px solid black',
+  },
+  mainImg: {
+    width: '100%',
+    height: '100%'
+  },
+  type: {
+    width: '80%',
+    margin: 'auto',
+    marginTop: '-1.5rem',
+    backgroundColor: '-webkit-linear-gradient(to right, #334d50, #cbcaa5)',
+    backgroundImage: 'linear-gradient(to right, #334d50, #cbcaa5)',
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
+    color: 'white',
+    fontSize: '0.8rem',
+    padding: '.5rem',
+    border: '1px solid black',
+  },
+  description: {
+    width: '85%',
+    margin: 'auto',
+    height: '200px',
+    backgroundColor: 'white',
+    padding: '.75rem',
+    marginTop: '-.5rem',
+    color: 'black',
+    border: '1px solid black',
+    marginBottom: '1rem'
   }
 }));
 
 const Card: React.FC = () => {
   const { classes } = useStyles();
+  const cards = zonnCardsData as Card[];
 
   return (
-    <Box className={classes.outerContainer}>
-      <Box className={classes.cardContainer}>
-        <Box>
-          <Box className={classes.name}>Name</Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
+    <Box>
+      <Text style={{marginBottom: '2rem'}}>Note: Karty podsunęły mi pomysł na delikatne dopracowanie historii. Od dawna zauważyłem już, że jestem
+        inny niż pozostali adepci zakonu mgły. Oni musieli gromadzić swoje chmury, które z czasem znowu całkiem się rozwiewały. 
+        Nieliczni potrafili zatrzymać je przy sobie na dłużej. Moja mgła nie dość, że trzymała się mnie nieustannie (nie noszę jej
+        w dzbanie żeby jej nie starcić, tylko żeby ją schować - kiedy nie mam dzbanu, nieustannie lata wokół mnie), ale również do mnie szeptała.
+        Od miesięcy planowałem ucieczkę z klasztoru, z którego korupcją nie mogłem się pogodzięć i o którym wiedziałem, że tai
+        prawdziwą wiedze przed własnymi uczniami. Moja decyzja musiała jednak przyspieszyć po tym, jak przy pomocy podszeptów mgły,
+        odkryłem jak przybrać jej kształt. Kiedy oplotłem się chmurami, znalazłem się jedną nogą w świecie mgły - widziałem go i słyszałem. Okazało się jednak, że z
+        zewnątrz bardzo pryzpominam innym mnichom potwora, z którego obecności próbowali leczyć świat. Wiedziałem, że nie jestem potworem.
+        Uciekłem natychmiast. Muszę zrozumieć mgłę.
+      </Text>
+      {cards.length > 0 && cards.map(card => (
+        <Box className={classes.cardContainer} style={{ backgroundImage: `url(${card.backgroundImg}` }}>
+          <Box>
+            <Box className={classes.name}>{card.name}</Box>
+            <Box className={classes.mainImgContainer}><img className={classes.mainImg} alt='card_main_img' src={card.mainImg} /></Box>
+            <Box className={classes.type} style={{ position: 'relative', zIndex: 100 }}>{card.type}</Box>
+            <Box className={classes.description}>
+              <Text>{card.description1}</Text>
+              {card.description2 && <Text>{card.description2}</Text>}
+            </Box>
+          </Box>
+          <Box className={classes.topCircle}><Text className={classes.topCircleData}>{card.cost}</Text></Box>
+          <Box className={classes.blackBoxLeft}></Box>
+          <Box className={classes.blackBoxTop}></Box>
+          <Box className={classes.blackBoxRight} style={{ zIndex: 100 }}></Box>
+          <Box className={classes.blackBoxBottom} style={{ zIndex: 100 }}></Box>
+          <Box className={classes.bottomCircle}><Text className={classes.bottomCircleData}>{card.cooldown}</Text></Box>
         </Box>
-        <Box className={classes.circle}><Text className={classes.circleData}>0</Text></Box>
-        <Box></Box>
-      </Box>
+      ))}
     </Box>
   );
 };
 
 export default Card;
+
+type Card = {
+  name: string;
+  mainImg: string;
+  type: string;
+  description1: string;
+  description2?: string;
+  cost: string;
+  cooldown: string;
+  backgroundImg: string;
+}

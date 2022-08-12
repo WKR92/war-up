@@ -93,12 +93,12 @@ export default function Auth() {
 
   const sendEmailLink = async () => {
     const actionCodeSettings = {
-      // url: "https://wkr92.github.io/war-up/",
-      url: 'http://localhost:5173/',
+      url: "https://wkr92.github.io/war-up/",
+      // url: 'http://localhost:5173/',
       handleCodeInApp: true,
     };
 
-    sendSignInLinkToEmail(auth, email, actionCodeSettings)
+    if (email !== '') sendSignInLinkToEmail(auth, email, actionCodeSettings)
       .then(() => {
         setStore("emailForSignIn", email);
         showNotification({
@@ -213,13 +213,13 @@ export default function Auth() {
           placeholder="your@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={async () => await sendEmailLink()}
         />
         <Button
-          onKeyDown={async () => await sendEmailLink()}
           className={classes.emailSubmit}
           onClick={async () => await sendEmailLink()}
         >
-          Send me log in link 
+          Send me log in link
         </Button>
         {/* <form
           className={classes.form}

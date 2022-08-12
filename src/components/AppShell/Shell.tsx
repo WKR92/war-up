@@ -96,13 +96,14 @@ const Shell: React.FC<IProps> = ({ children }) => {
               icon={<IconActivity size={16} stroke={2} />}
               rightSection={<IconChevronRight size={16} stroke={2} />}
             />
-            <NavLink
+            {user.role === "MP" && <NavLink
               onClick={async () => {
-                changePath("/card");              }}
-              label="Card"
+                changePath("/cards");
+              }}
+              label="Cards"
               icon={<IconActivity size={16} stroke={2} />}
               rightSection={<IconChevronRight size={16} stroke={2} />}
-            />
+            />}
             <NavLink
               onClick={async () => {
                 await logOut();
@@ -146,6 +147,10 @@ const Shell: React.FC<IProps> = ({ children }) => {
                   <IconActivity size={16} stroke={2} />
                   <Text onClick={() => navigate("/champions")}>Team</Text>
                 </Group>
+                {user.role === "MP" && <Group className={classes.headerGroup}>
+                  <IconActivity size={16} stroke={2} />
+                  <Text onClick={() => navigate("/cards")}>Cards</Text>
+                </Group>}
                 <Group className={classes.logOutHeaderGroup}>
                   <IconLogout size={16} stroke={2} />
                   <Text onClick={() => logOut()}>Log out</Text>

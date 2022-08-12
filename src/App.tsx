@@ -44,7 +44,7 @@ function App() {
                     <Route path="/" element={<MPDashboard />}></Route>
                   )}
                   <Route path="/champions" element={<Team />}></Route>
-                  <Route path="/card" element={<Card />}></Route>
+                  <Route path="/cards" element={<Card />}></Route>
                 </Routes>
               </Shell>
             </Router>
