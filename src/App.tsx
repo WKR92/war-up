@@ -12,6 +12,7 @@ import { ModalsProvider } from "@mantine/modals";
 import MPDashboard from "./components/MP/MPDashboard";
 import Shell from "./components/AppShell/Shell";
 import Team from "./components/OtherChampions/Team";
+import Card from "./components/Cards/Card";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/" element={<MPDashboard />}></Route>
                   )}
                   <Route path="/champions" element={<Team />}></Route>
+                  <Route path="/card" element={<Card />}></Route>
                 </Routes>
               </Shell>
             </Router>
