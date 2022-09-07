@@ -21,7 +21,10 @@ export default function championsReducer(
 
       const add = newState[index].add;
       const atr = action.payload.stat as keyof typeof add;
-      add[atr] = add[atr] + 1;
+      const statsIncreasedBy5 = ['WW', 'US', 'K', 'ODP', 'ZR', 'INT', 'SW', 'OGL'];
+      console.log(action.payload.stat)
+      if (statsIncreasedBy5.includes(action.payload.stat.toUpperCase())) add[atr] = add[atr] + 5;
+      if (!statsIncreasedBy5.includes(action.payload.stat.toUpperCase())) add[atr] = add[atr] + 1;
       newState[index].exp = newState[index].exp - 100;
       return [...newState];
     }

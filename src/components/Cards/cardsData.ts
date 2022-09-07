@@ -74,7 +74,7 @@ export const zonnCardsData = [
         mainImg: 'https://i.pinimg.com/564x/6c/d5/79/6cd579eeffd2cd42345e25907dd0dc31.jpg',
         type: 'Akcja',
         description1: 'Tylko z typ II. Zasięg 2 ⬡.',
-        description2: 'Wchłanaisz wcześniej stworzoną zjawę. Wybierz: 1) Zdejmujesz 2 tokeny oczekiwania ze swojej karty. 2) Otrzymujesz 2 Ap',
+        description2: 'Wchłanaisz wcześniej stworzoną zjawę. Wybierz: 1) Zdejmujesz 2 tokeny CD ze swojej karty. 2) Otrzymujesz 2 AP',
         cost: '0',
         cooldown: '-',
         backgroundImg: 'https://images.unsplash.com/photo-1585508889431-a1d0d9c5a324?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
