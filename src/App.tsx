@@ -13,6 +13,7 @@ import MPDashboard from "./components/MP/MPDashboard";
 import Shell from "./components/AppShell/Shell";
 import Team from "./components/OtherChampions/Team";
 import Card from "./components/Cards/Card";
+import Dices from "./components/dices/Dices";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -45,6 +46,7 @@ function App() {
                   )}
                   <Route path="/champions" element={<Team />}></Route>
                   <Route path="/cards" element={<Card />}></Route>
+                  <Route path="/dices" element={<Dices />}></Route>
                 </Routes>
               </Shell>
             </Router>

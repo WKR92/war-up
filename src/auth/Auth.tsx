@@ -111,6 +111,7 @@ export default function Auth() {
   const checkIfSignedInWithEmailLink = async () => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = getStore("emailForSignIn") || "";
+      console.log('email', email)
       if (!email) {
         email =
           window.prompt("Please provide your email for confirmation") || "";
@@ -148,7 +149,6 @@ export default function Auth() {
           placeholder="your@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={async () => await sendEmailLink()}
         />
         <Button
           className={classes.emailSubmit}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, createStyles } from "@mantine/core";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firabase/sdk";
 import * as championActions from "../../redux/actions/champion/championActions";
 import { useDispatch, useSelector } from "react-redux";

@@ -49,7 +49,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   const updateExp = async () => {
     if (parseInt(exp) > 0) {
       const docRef = doc(db, "Champions", champ.id);
-      const data = { exp: parseInt(exp) };
+      const data = { exp: champ.exp + parseInt(exp) };
       await updateDoc(docRef, data);
     }
     setExp("");

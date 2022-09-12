@@ -135,7 +135,13 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
     const element = Object.values(elements).filter(
       (elem: ChampTableElement) => elem.stat === attribute.toUpperCase()
     );
-    const changedAttr = element[0].act + 1;
+    console.log('element', element)
+    const statsIncreasedBy5 = ['WW', 'US', 'K', 'ODP', 'ZR', 'INT', 'SW', 'OGL'];
+    let changedAttr = element[0].development;
+    console.log('before', changedAttr)
+    if (statsIncreasedBy5.includes(attribute.toUpperCase())) changedAttr = changedAttr + 5;
+    if (!statsIncreasedBy5.includes(attribute.toUpperCase())) changedAttr = changedAttr + 1;
+    console.log('after', changedAttr)
     const attrPath = `add.${attribute}`;
     const data = { [attrPath]: changedAttr };
     await updateDoc(docRef, data);
@@ -145,8 +151,12 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
 
   const dispatchAction = () => {
     dispatch(championActions.changeChampionStat(attribute, champ.user));
+    const statsIncreasedBy5 = ['WW', 'US', 'K', 'ODP', 'ZR', 'INT', 'SW', 'OGL'];
+    let amount = 0;
+    if (statsIncreasedBy5.includes(attribute.toUpperCase())) amount = 5;
+    if (!statsIncreasedBy5.includes(attribute.toUpperCase())) amount = 1;
     showNotification({
-      message: `${attribute.toUpperCase()} + 1`,
+      message: `${attribute.toUpperCase()} + ${amount}`,
       autoClose: 5000,
       color: "cyan",
     });
