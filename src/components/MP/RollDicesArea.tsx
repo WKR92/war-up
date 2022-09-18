@@ -39,10 +39,13 @@ const RollDicesArea: React.FC = () => {
   const [selectedDice, setSelectedDice] = useState("k10" as string | null);
 
   const rollSecondaryDice = () => {
+    if (selectedDice === "k20") setResult2(dice.rollK20());
+    if (selectedDice === "k12") setResult2(dice.rollK12());
     if (selectedDice === "k10") setResult2(dice.rollK10());
     if (selectedDice === "k8") setResult2(dice.rollK8());
     if (selectedDice === "k6") setResult2(dice.rollK6());
     if (selectedDice === "k4") setResult2(dice.rollK4());
+    if (selectedDice === "k2") setResult2(dice.rollK2());
   };
 
   const actionRoll = () => {
@@ -60,10 +63,13 @@ const RollDicesArea: React.FC = () => {
               label="Secondary dice"
               placeholder="secondary dice"
               data={[
+                { value: "k20", label: "k20" },
+                { value: "k12", label: "k12" },
                 { value: "k10", label: "k10" },
                 { value: "k8", label: "k8" },
                 { value: "k6", label: "k6" },
                 { value: "k4", label: "k4" },
+                { value: "k2", label: "k2" },
               ]}
               value={selectedDice}
               onChange={(k) => {
