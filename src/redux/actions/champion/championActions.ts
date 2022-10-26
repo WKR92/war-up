@@ -1,14 +1,16 @@
 import {
-  CHAMPIONS_DOWNLOADED,
-  CHANGE_CHAMPION_STAT,
-  REMOVE_ITEM,
   ADD_ITEM,
-  CHANGE_MONEY,
   ADD_SKILL,
-  IMPROVE_SKILL,
+  CHAMPIONS_DOWNLOADED,
   CHAMPION_DELETED,
-  CHANGE_IMAGE
+  CHANGE_CHAMPION_STAT,
+  CHANGE_IMAGE,
+  CHANGE_LIFE,
+  CHANGE_MONEY,
+  IMPROVE_SKILL,
+  REMOVE_ITEM
 } from "./championsActionTypes";
+
 import { Champion } from "../../../Models/Models";
 
 export const championsDownloaded = (champions: Champion[]) => {
@@ -57,6 +59,13 @@ export const addItem = (
 export const changeMoney = (champUser: string, operation: string) => {
   return {
     type: CHANGE_MONEY,
+    payload: { champUser, operation },
+  };
+};
+
+export const changeLife = (champUser: string, operation: string) => {
+  return {
+    type: CHANGE_LIFE,
     payload: { champUser, operation },
   };
 };

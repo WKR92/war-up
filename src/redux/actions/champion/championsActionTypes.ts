@@ -4,6 +4,7 @@ export const CHANGE_CHAMPION_STAT = "CHANGE_CHAMPION_STAT";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export const ADD_ITEM = "ADD_ITEM";
 export const CHANGE_MONEY = "CHANGE_MONEY";
+export const CHANGE_LIFE = "CHANGE_LIFE";
 export const ADD_SKILL = "ADD_SKILL";
 export const IMPROVE_SKILL = "IMPROVE_SKILL";
 export const CHANGE_IMAGE = "CHANGE_IMAGE";

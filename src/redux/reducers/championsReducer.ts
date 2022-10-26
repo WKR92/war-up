@@ -1,5 +1,6 @@
-import { Champion, championAction } from "../../Models/Models";
 import * as championsActionTypes from "../actions/champion/championsActionTypes";
+
+import { Champion, championAction } from "../../Models/Models";
 
 type ChampionsReducer = Champion[];
 
@@ -72,6 +73,20 @@ export default function championsReducer(
       }
       return [...newState];
     }
+    case championsActionTypes.CHANGE_LIFE: {
+      const newState: Champion[] = JSON.parse(JSON.stringify(state));
+      const championToChange = newState.filter(
+        (champion: Champion) => champion.user === action.payload.champUser
+      );
+      const index = newState.indexOf(championToChange[0]);
+      if (action.payload.operation === "add")
+        newState[index].actualLife = parseInt(newState[index].actualLife.toString()) + 1;
+      if (action.payload.operation === "sub") {
+        if (newState[index].actualLife === 0) return [...newState];
+        newState[index].actualLife = newState[index].actualLife - 1;
+      }
+      return [...newState];
+    }
     case championsActionTypes.ADD_SKILL: {
       const newState: Champion[] = JSON.parse(JSON.stringify(state));
       const championToChange = newState.filter(
@@ -123,7 +138,7 @@ export default function championsReducer(
         (champion: Champion) => { 
           console.log('champion.id', champion.id)
           console.log('action.payload.champId', action.payload.champId)
-           return champion.id === action.payload.champId}
+          return champion.id === action.payload.champId}
       );
       const index = newState.indexOf(championToChange[0]);
       newState[index].img = action.payload.image;

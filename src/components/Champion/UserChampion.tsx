@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -6,17 +5,20 @@ import {
   Input,
   createStyles,
 } from "@mantine/core";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firabase/sdk";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import React, { useEffect, useState } from "react";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+
 import { Champion } from "../../Models/Models";
 import ChampionArray from "./ChampionArray";
+import ChampionImage from "./ChampionImage";
+import ChampionLife from "./ChampionLife";
 import ChampionMoney from "./ChampionMoney";
 import ChampionStats from "./ChampionStats";
-import { showNotification } from "@mantine/notifications";
 import DeleteChampionModal from "./DeleteChampionModal";
-import ChampionImage from "./ChampionImage";
+import { RootState } from "../../redux/store/store";
+import { db } from "../../firabase/sdk";
+import { showNotification } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const useStyles = createStyles(() => ({
   expContainer: {
@@ -80,6 +82,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
       <ChampionArray champ={champ} arrayName="inventory" />
       <ChampionImage champ={champ} />
       <ChampionMoney champ={champ} />
+      <ChampionLife champ={champ} />
       {user.role === "MP" && (
         <Group className={classes.expContainer}>
           <Input

@@ -31,6 +31,10 @@ export type championAction =
       type: "CHANGE_MONEY";
       payload: { champUser: string; operation: string };
     }
+    | {
+      type: "CHANGE_LIFE";
+      payload: { champUser: string; operation: string };
+    }
   | {
       type: "ADD_SKILL";
       payload: { champUser: string; skill: string };
@@ -70,6 +74,7 @@ export interface Champion {
   abilities: string[];
   skills: any[];
   id: string;
+  actualLife: number;
 }
 
 export interface Skills {
@@ -112,6 +117,7 @@ export interface Stats {
 export interface CreateChampionFormValues {
   name: string;
   money: number;
+  actualLife: number;
   skills: string[];
   abilities: string[];
   inventory: string[];

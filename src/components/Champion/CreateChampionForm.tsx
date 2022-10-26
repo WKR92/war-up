@@ -1,27 +1,28 @@
-import React, { useEffect, useState, useRef } from "react";
 import {
-  TextInput,
+  Box,
   Button,
   Group,
-  Box,
-  createStyles,
   Input,
   Table,
-  Text
+  Text,
+  TextInput,
+  createStyles
 } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { IconTrash } from "@tabler/icons";
 import {
   Champion,
   CreateChampFormTableElement,
   CreateChampionFormValues,
 } from "../../Models/Models";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useRef, useState } from "react";
+import { UseFormReturnType, useForm } from "@mantine/form";
+import { addDoc, collection } from "firebase/firestore";
+
+import { IconTrash } from "@tabler/icons";
 import { RootState } from "../../redux/store/store";
-import { showNotification } from "@mantine/notifications";
-import { useForm, UseFormReturnType } from "@mantine/form";
-import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firabase/sdk";
+import { showNotification } from "@mantine/notifications";
+import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = createStyles(() => ({
   outerContainer: {
@@ -69,6 +70,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     initialValues: {
       name: "",
       money: 0,
+      actualLife: 0,
       skills: [],
       abilities: [],
       inventory: [],
@@ -156,6 +158,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     const newChampion: Champion = {
       name: values.name,
       money: Number(values.money),
+      actualLife: Number(values.baseZYW),
       skills: formatedSkills,
       abilities,
       inventory,
