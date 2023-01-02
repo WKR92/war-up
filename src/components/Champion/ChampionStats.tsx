@@ -77,13 +77,20 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
       development: champ.add[atr as keyof Stats],
       base: champ.base[atr as keyof Stats],
       act:
-        atr === "S" || atr === "WYT"
-          ? parseFloat(
-              (
-                checkIfNaN(
-                  champ.base[atr as keyof Stats] + champ.add[atr as keyof Stats]
-                ) / 10
-              ).toFixed(0)
+        atr === "s" || atr === "wyt"
+          ? Math.floor(
+              checkIfNaN(
+                champ.base[atr as keyof Stats] + champ.add[atr as keyof Stats]
+              )
+            )
+          : atr === "pp" ||
+            atr === "po" ||
+            atr === "mag" ||
+            atr === "szyb" ||
+            atr === "zyw" ||
+            atr === "a"
+          ? checkIfNaN(
+              champ.base[atr as keyof Stats] + champ.add[atr as keyof Stats]
             )
           : checkIfNaN(
               Math.round(
