@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Text, Button, Group, Box, createStyles, Select } from "@mantine/core";
 import * as dice from "../../services/diceService";
+
+import { Box, Button, Group, Select, Text, createStyles } from "@mantine/core";
+import React, { useEffect, useRef, useState } from "react";
+
 import { BattleMember } from "../../Models/Models";
 
 const useStyles = createStyles(() => ({
@@ -39,6 +41,7 @@ const RollDicesArea: React.FC = () => {
   const [selectedDice, setSelectedDice] = useState("k10" as string | null);
 
   const rollSecondaryDice = () => {
+    if (selectedDice === "k100") setResult2(dice.rollK100());
     if (selectedDice === "k20") setResult2(dice.rollK20());
     if (selectedDice === "k12") setResult2(dice.rollK12());
     if (selectedDice === "k10") setResult2(dice.rollK10());
@@ -49,7 +52,7 @@ const RollDicesArea: React.FC = () => {
   };
 
   const actionRoll = () => {
-    setResult1(dice.rollK100());
+    setResult1(dice.rollK20());
     rollSecondaryDice();
   };
 
@@ -63,6 +66,7 @@ const RollDicesArea: React.FC = () => {
               label="Secondary dice"
               placeholder="secondary dice"
               data={[
+                { value: "k100", label: "k100" },
                 { value: "k20", label: "k20" },
                 { value: "k12", label: "k12" },
                 { value: "k10", label: "k10" },
@@ -87,7 +91,7 @@ const RollDicesArea: React.FC = () => {
           </Group>
         </Box>
         <Group className={classes.container}>
-          <Text>k100:</Text>
+          <Text>k20:</Text>
           <Text>{selectedDice}:</Text>
         </Group>
         <Group className={classes.container}>

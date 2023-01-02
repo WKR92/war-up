@@ -1,4 +1,5 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT} from './userActionTypes';
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from './userActionTypes';
+
 import { User } from '../../../Models/Models';
 
 export const userLoggedIn = (user: User) => {
@@ -9,7 +10,7 @@ export const userLoggedIn = (user: User) => {
       uid: user.uid,
       displayName: user.displayName,
       photoUrl: user.photoURL,
-      role: user.email === 'sleepkornt@gmail.com' ? 'MP' : 'BG'
+      role: user.email === 'w.k.r.1992@gmail.com' ? 'MP' : 'BG'
     }
   }
 }

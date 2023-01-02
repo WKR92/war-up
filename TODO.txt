@@ -1,2 +1,0 @@
-1. Nie można otworzyć hero w teams
-2. Nie działa disabling button dla give exp 

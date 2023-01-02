@@ -1,24 +1,26 @@
+import * as userActions from "../../redux/actions/user/userActions";
+
 import {
-  Group,
   AppShell,
-  Header,
   Burger,
-  useMantineTheme,
-  Text,
-  Navbar,
+  Group,
+  Header,
   MediaQuery,
   NavLink,
+  Navbar,
+  Text,
   createStyles,
+  useMantineTheme,
 } from "@mantine/core";
-import { IconChevronRight, IconActivity, IconLogout } from "@tabler/icons";
+import { IconActivity, IconChevronRight, IconLogout } from "@tabler/icons";
 import { ReactNode, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { RootState } from "../../redux/store/store";
-import { useNavigate } from "react-router-dom";
-import { showNotification } from "@mantine/notifications";
 import { auth } from "../../firabase/sdk";
+import { showNotification } from "@mantine/notifications";
 import { signOut } from "firebase/auth";
-import * as userActions from "../../redux/actions/user/userActions";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles(() => ({
   headerGroup: {

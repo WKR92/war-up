@@ -18,4 +18,4 @@ export const rollK4 = () => generateRandomNumberInRange(1, 4);
 export const rollK2 = () => generateRandomNumberInRange(1, 2);
 
 export const rollForInitiativeForEnemy = () =>
-  generateRandomNumberInRange(1, 100) + generateRandomNumberInRange(20, 40);
+  generateRandomNumberInRange(1, 20) + generateRandomNumberInRange(2, 19);

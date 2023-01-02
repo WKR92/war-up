@@ -1,13 +1,15 @@
 import * as championActions from "../../redux/actions/champion/championActions";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { Champion, ChampTableElement, Stats } from "../../Models/Models";
-import { Table } from "@mantine/core";
+
+import { Box, Button, Group, Modal, createStyles } from "@mantine/core";
+import { ChampTableElement, Champion, Stats } from "../../Models/Models";
 import React, { useEffect, useState } from "react";
-import { Button, Box, createStyles, Modal, Group } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { doc, updateDoc } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+
+import { RootState } from "../../redux/store/store";
+import { Table } from "@mantine/core";
 import { db } from "../../firabase/sdk";
+import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -84,7 +86,11 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
               ).toFixed(0)
             )
           : checkIfNaN(
-              champ.base[atr as keyof Stats] + champ.add[atr as keyof Stats]
+              Math.round(
+                (champ.base[atr as keyof Stats] +
+                  champ.add[atr as keyof Stats]) /
+                  5
+              )
             ),
       fn: (
         <Button onClick={() => openModal(atr)} size="xs">
@@ -135,13 +141,24 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
     const element = Object.values(elements).filter(
       (elem: ChampTableElement) => elem.stat === attribute.toUpperCase()
     );
-    console.log('element', element)
-    const statsIncreasedBy5 = ['WW', 'US', 'K', 'ODP', 'ZR', 'INT', 'SW', 'OGL'];
+    console.log("element", element);
+    const statsIncreasedBy5 = [
+      "WW",
+      "US",
+      "K",
+      "ODP",
+      "ZR",
+      "INT",
+      "SW",
+      "OGL",
+    ];
     let changedAttr = element[0].development;
-    console.log('before', changedAttr)
-    if (statsIncreasedBy5.includes(attribute.toUpperCase())) changedAttr = changedAttr + 5;
-    if (!statsIncreasedBy5.includes(attribute.toUpperCase())) changedAttr = changedAttr + 1;
-    console.log('after', changedAttr)
+    console.log("before", changedAttr);
+    if (statsIncreasedBy5.includes(attribute.toUpperCase()))
+      changedAttr = changedAttr + 5;
+    if (!statsIncreasedBy5.includes(attribute.toUpperCase()))
+      changedAttr = changedAttr + 1;
+    console.log("after", changedAttr);
     const attrPath = `add.${attribute}`;
     const data = { [attrPath]: changedAttr };
     await updateDoc(docRef, data);
@@ -151,7 +168,16 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
 
   const dispatchAction = () => {
     dispatch(championActions.changeChampionStat(attribute, champ.user));
-    const statsIncreasedBy5 = ['WW', 'US', 'K', 'ODP', 'ZR', 'INT', 'SW', 'OGL'];
+    const statsIncreasedBy5 = [
+      "WW",
+      "US",
+      "K",
+      "ODP",
+      "ZR",
+      "INT",
+      "SW",
+      "OGL",
+    ];
     let amount = 0;
     if (statsIncreasedBy5.includes(attribute.toUpperCase())) amount = 5;
     if (!statsIncreasedBy5.includes(attribute.toUpperCase())) amount = 1;

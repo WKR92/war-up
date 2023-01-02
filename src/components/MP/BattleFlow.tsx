@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { IconSquareMinus, IconCircleCheck } from "@tabler/icons";
-import { Text, Button, Group, Box, createStyles } from "@mantine/core";
-import { Champion, BattleMember } from "../../Models/Models";
 import * as dice from "../../services/diceService";
+
+import { BattleMember, Champion } from "../../Models/Models";
+import { Box, Button, Group, Text, createStyles } from "@mantine/core";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { IconCircleCheck, IconSquareMinus } from "@tabler/icons";
+import React, { useEffect } from "react";
 
 const useStyles = createStyles(() => ({
   dndUl: {
@@ -97,7 +98,7 @@ const BattleFlow: React.FC<IProps> = ({
     players.forEach((player: any) =>
       init.push({
         id: player.id,
-        initiative: player.add.zr + player.base.zr + dice.rollK100(),
+        initiative: Math.round((player.add.zr + player.base.zr)/5) + dice.rollK20(),
       })
     );
     init.sort((a, b) => a.initiative - b.initiative).reverse();

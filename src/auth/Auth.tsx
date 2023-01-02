@@ -14,11 +14,6 @@ import { RootState } from "../redux/store/store";
 import { auth } from "../firabase/sdk";
 import { showNotification } from "@mantine/notifications";
 
-type FormValues = {
-  email: string;
-  password: string;
-};
-
 const useStyles = createStyles(() => ({
   wrapper: {
     height: "100vh",
@@ -90,8 +85,8 @@ export default function Auth() {
 
   const sendEmailLink = async () => {
     const actionCodeSettings = {
-      url: "https://wkr92.github.io/war-up/",
-      // url: "http://localhost:5173/",
+      // url: "https://wkr92.github.io/war-up/",
+      url: "http://localhost:5173/",
       handleCodeInApp: true,
     };
 
