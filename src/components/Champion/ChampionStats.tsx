@@ -159,12 +159,12 @@ const ChampionStats: React.FC<IProps> = ({ champ }) => {
       "SW",
       "OGL",
     ];
-    let changedAttr = element[0].development;
+    const changedAttr = element[0].development;
     console.log("before", changedAttr);
-    if (statsIncreasedBy5.includes(attribute.toUpperCase()))
-      changedAttr = changedAttr + 5;
-    if (!statsIncreasedBy5.includes(attribute.toUpperCase()))
-      changedAttr = changedAttr + 1;
+    // if (statsIncreasedBy5.includes(attribute.toUpperCase()))
+    //   changedAttr = changedAttr + 5;
+    // if (!statsIncreasedBy5.includes(attribute.toUpperCase()))
+    //   changedAttr = changedAttr + 1;
     console.log("after", changedAttr);
     const attrPath = `add.${attribute}`;
     const data = { [attrPath]: changedAttr };

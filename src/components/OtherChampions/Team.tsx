@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, createStyles, Group, Text } from "@mantine/core";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { Champion } from "../../Models/Models";
-import UserChampion from "../Champion/UserChampion";
 import * as championActions from "../../redux/actions/champion/championActions";
+
+import { Box, Button, Group, Text, createStyles } from "@mantine/core";
+import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Champion } from "../../Models/Models";
+import { RootState } from "../../redux/store/store";
+import UserChampion from "../Champion/UserChampion";
 import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
@@ -42,13 +44,12 @@ const Team: React.FC = () => {
   });
 
   const getChampions = () => {
-    getDocs(championsCollectionRef).then((snaphot) => {
-      // eslint-disable-next-line
-      const champs: any[] = [];
-      snaphot.docs.forEach((doc) => {
+    getDocs(championsCollectionRef).then((snapshot) => {
+      const champs: unknown[] = [];
+      snapshot.docs.forEach((doc) => {
         champs.push({ ...doc.data(), id: doc.id });
       });
-      dispatch(championActions.championsDownloaded(champs));
+      dispatch(championActions.championsDownloaded(champs as Champion[]));
     });
   };
 

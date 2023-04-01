@@ -1,19 +1,21 @@
-import Auth from "./auth/Auth";
-import { MantineProvider } from "@mantine/core";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./redux/store/store";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
-import { auth } from "./firabase/sdk";
 import * as userActions from "./redux/actions/user/userActions";
+
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import Auth from "./auth/Auth";
+import Card from "./components/Cards/Card";
 import ChampionDashboard from "./components/Champion/ChampionDashboard";
-import { NotificationsProvider } from "@mantine/notifications";
-import { ModalsProvider } from "@mantine/modals";
+import Dices from "./components/dices/Dices";
 import MPDashboard from "./components/MP/MPDashboard";
+import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
+import { RootState } from "./redux/store/store";
 import Shell from "./components/AppShell/Shell";
 import Team from "./components/OtherChampions/Team";
-import Card from "./components/Cards/Card";
-import Dices from "./components/dices/Dices";
+import { auth } from "./firabase/sdk";
+import { useEffect } from "react";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -47,6 +49,7 @@ function App() {
                   <Route path="/champions" element={<Team />}></Route>
                   <Route path="/cards" element={<Card />}></Route>
                   <Route path="/dices" element={<Dices />}></Route>
+                  <Route path="/stats" element={<Team />}></Route>
                 </Routes>
               </Shell>
             </Router>

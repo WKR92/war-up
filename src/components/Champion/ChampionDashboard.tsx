@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Box, createStyles } from "@mantine/core";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firabase/sdk";
 import * as championActions from "../../redux/actions/champion/championActions";
+
+import { Box, LoadingOverlay, createStyles } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import UserChampion from "./UserChampion";
+
 import { Champion } from "../../Models/Models";
 import CreateChampionForm from "./CreateChampionForm";
+import { RootState } from "../../redux/store/store";
+import UserChampion from "./UserChampion";
+import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
   title: {
@@ -26,20 +28,30 @@ const ChampionDashboard: React.FC = () => {
   const champions = useSelector((state: RootState) => state.champions);
   const user = useSelector((state: RootState) => state.user);
   const [champ, setChamp] = useState({} as Champion);
+  const [update, setUpdate] = useState(1);
 
   const getChampions = () => {
-    getDocs(championsCollectionRef).then((snaphot) => {
-      // eslint-disable-next-line
-      const champs: any[] = [];
-      snaphot.docs.forEach((doc) => {
+    getDocs(championsCollectionRef).then((snapshot) => {
+      const champs: unknown[] = [];
+      snapshot.docs.forEach((doc) => {
         champs.push({ ...doc.data(), id: doc.id });
       });
-      dispatch(championActions.championsDownloaded(champs));
+      dispatch(championActions.championsDownloaded(champs as Champion[]));
     });
   };
 
   useEffect(() => {
-    if (champions.length === 0) getChampions();
+    if (champions.length > 0) getChampions();
+    const userChamp = champions.filter(
+      (champ: Champion) => champ.user === user.email
+    );
+    if (userChamp.length > 0) {
+      setChamp(userChamp[0]);
+    }
+  }, [update]);
+
+  useEffect(() => {
+    if (!champions.length) getChampions();
     const userChamp = champions.filter(
       (champ: Champion) => champ.user === user.email
     );
@@ -52,12 +64,13 @@ const ChampionDashboard: React.FC = () => {
     <Box className={classes.container}>
       <h2 className={classes.title}>Hero dashboard</h2>
       {Object.keys(champ).length > 0 ? (
-        <UserChampion champ={champ} setChamp={setChamp} />
+        <UserChampion champ={champ} setChamp={setChamp} setUpdate={setUpdate} />
       ) : (
-        <CreateChampionForm getChampions={getChampions} />
+        // <CreateChampionForm getChampions={getChampions} />
+        <LoadingOverlay visible={!Object.keys(champ).length} overlayBlur={2} />
       )}
     </Box>
   );
-}
+};
 
 export default ChampionDashboard;

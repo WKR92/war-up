@@ -9,9 +9,9 @@ import {
   createStyles
 } from "@mantine/core";
 import {
-  Champion,
   CreateChampFormTableElement,
   CreateChampionFormValues,
+  OldChampion,
 } from "../../Models/Models";
 import React, { useEffect, useRef, useState } from "react";
 import { UseFormReturnType, useForm } from "@mantine/form";
@@ -123,7 +123,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     });
   };
 
-  const saveChampionToFireStore = async (newChampion: Champion) => {
+  const saveChampionToFireStore = async (newChampion: OldChampion) => {
     if (newChampion) await addDoc(championsCollectionRef, newChampion);
     getChampions();
     return showNotification({
@@ -155,7 +155,7 @@ const CreateChampionForm: React.FC<IProps> = ({ getChampions }) => {
     const formatedSkills = skills.reduce((accumulator: any, value: string) => {
       return { ...accumulator, [value]: 0 };
     }, {});
-    const newChampion: Champion = {
+    const newChampion: OldChampion = {
       name: values.name,
       money: Number(values.money),
       actualLife: Number(values.baseZYW),

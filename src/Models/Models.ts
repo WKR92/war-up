@@ -62,7 +62,7 @@ export interface Campaigns {
   campaigns: Campaign[];
 }
 
-export interface Champion {
+export interface OldChampion {
   user: string;
   base: Stats;
   add: Stats;
@@ -77,15 +77,51 @@ export interface Champion {
   actualLife: number;
 }
 
+export interface Champion {
+  user: string;
+  base: Stats;
+  add: Stats;
+  exp: number;
+  inventory: string[];
+  name: string;
+  img: string;
+  money: number;
+  abilities: string[];
+  skills: any[];
+  id: string;
+  actualLife: number;
+  stats: NewStats
+}
+
+export interface NewStats {
+  WW: number;
+  US: number;
+  K: number;
+  ODP: number;
+  ZR: number;
+  INT: number;
+  SW: number;
+  OGL: number;
+  A: number;
+  ZYW: number;
+  S: number;
+  WYT: number;
+  SZYB: number;
+  MAG: number;
+  PO: number;
+  PP: number;
+}
+
 export interface Skills {
   [key: string]: string;
 }
 
 export interface ChampTableElement {
   stat: string;
-  base: number;
-  development: number;
-  act: number;
+  base?: number;
+  development?: number;
+  act?: number;
+  value?: number;
   fn?: ReactNode;
 }
 

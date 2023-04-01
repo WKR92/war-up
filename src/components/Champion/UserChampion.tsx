@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Group,
-  Input,
-  createStyles,
-} from "@mantine/core";
+import { Box, Button, Group, Input, createStyles } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
@@ -13,12 +7,20 @@ import ChampionArray from "./ChampionArray";
 import ChampionImage from "./ChampionImage";
 import ChampionLife from "./ChampionLife";
 import ChampionMoney from "./ChampionMoney";
+import ChampionNewStats from "./ChampionNewStats";
 import ChampionStats from "./ChampionStats";
-import DeleteChampionModal from "./DeleteChampionModal";
 import { RootState } from "../../redux/store/store";
 import { db } from "../../firabase/sdk";
 import { showNotification } from "@mantine/notifications";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+// import DeleteChampionModal from "./DeleteChampionModal";
+
+
+
+
+
 
 const useStyles = createStyles(() => ({
   expContainer: {
@@ -35,17 +37,19 @@ const useStyles = createStyles(() => ({
 type IProps = {
   champ: Champion;
   setChamp: React.Dispatch<React.SetStateAction<Champion>> | null;
+  setUpdate?: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
+const UserChampion: React.FC<IProps> = ({ champ, setChamp, setUpdate }) => {
   const { classes } = useStyles();
   const user = useSelector((state: RootState) => state.user);
   const docRef = doc(db, "Champions", champ.id);
   const [exp, setExp] = useState("");
-  const ruleOfDisplay = user.email === champ.user;
+  // const ruleOfDisplay = user.email === champ.user;
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({top: 0, left: 0});
+    window.scrollTo({ top: 0, left: 0 });
   }, []);
 
   const updateExp = async () => {
@@ -75,8 +79,14 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
   return (
     <Box>
       <h3>{champ.name}</h3>
-      {(user.email === champ.user || user.role === 'MP') && <p>Exp: {champ.exp}</p>}
-      <ChampionStats champ={champ} />
+      {(user.email === champ.user || user.role === "MP") && (
+        <p>Exp: {champ.exp}</p>
+      )}
+      {location.pathname !== "/stats" && location.pathname !== "/" ? (
+        <ChampionStats champ={champ} />
+      ) : (
+        <ChampionNewStats champ={champ} setUpdate={setUpdate ?? null} />
+      )}
       <ChampionArray champ={champ} arrayName="abilities" />
       <ChampionArray champ={champ} arrayName="skills" />
       <ChampionArray champ={champ} arrayName="inventory" />
@@ -90,7 +100,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
             value={exp}
             onChange={(e: any) => setExp(e.target.value)}
             className={classes.expInput}
-            type='number'
+            type="number"
           />
           <Button
             disabled={
@@ -104,7 +114,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp }) => {
           </Button>
         </Group>
       )}
-      {ruleOfDisplay && <DeleteChampionModal onConfirm={deleteChampion} />}
+      {/* {ruleOfDisplay && <DeleteChampionModal onConfirm={deleteChampion} />} */}
     </Box>
   );
 };
