@@ -155,7 +155,7 @@ const Shell: React.FC<IProps> = ({ children }) => {
                 </Group>
                 <Group className={classes.headerGroup}>
                   <IconActivity size={16} stroke={2} />
-                  <Text onClick={() => navigate("/stats")}>New Stats</Text>
+                  <Text onClick={() => navigate("/cards")}>Cards</Text>
                 </Group>
                 <Group className={classes.logOutHeaderGroup}>
                   <IconLogout size={16} stroke={2} />

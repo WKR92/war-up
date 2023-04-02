@@ -1,25 +1,5 @@
 import * as championsActionTypes from "../actions/champion/championsActionTypes";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { Champion, championAction } from "../../Models/Models";
 
 type ChampionsReducer = Champion[];
@@ -86,10 +66,10 @@ export default function championsReducer(
       );
       const index = newState.indexOf(championToChange[0]);
       if (action.payload.operation === "add")
-        newState[index].money = parseInt(newState[index].money.toString()) + 1;
+        newState[index].money = parseInt(newState[index].money.toString()) + action.payload.money;
       if (action.payload.operation === "sub") {
-        if (newState[index].money === 0) return [...newState];
-        newState[index].money = newState[index].money - 1;
+        if (newState[index].money - action.payload.money <= 0) return [...newState];
+        newState[index].money = newState[index].money - action.payload.money;
       }
       return [...newState];
     }

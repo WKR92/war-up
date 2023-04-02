@@ -29,7 +29,7 @@ export type championAction =
     }
   | {
       type: "CHANGE_MONEY";
-      payload: { champUser: string; operation: string };
+      payload: { champUser: string; operation: string, money: number };
     }
     | {
       type: "CHANGE_LIFE";

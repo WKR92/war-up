@@ -1,13 +1,14 @@
-import React from "react";
 import {
-  Text,
-  TextInput,
+  Box,
   Button,
   Group,
-  Box,
-  createStyles,
   Modal,
+  Text,
+  TextInput,
+  createStyles,
 } from "@mantine/core";
+
+import React from "react";
 import { zonnCardsData } from "./cardsData";
 
 const useStyles = createStyles(() => ({
@@ -148,16 +149,6 @@ const Card: React.FC = () => {
 
   return (
     <Box>
-      <Text style={{marginBottom: '2rem'}}>Note: Karty podsunęły mi pomysł na delikatne dopracowanie historii. Od dawna zauważyłem już, że jestem
-        inny niż pozostali adepci zakonu mgły. Oni musieli gromadzić swoje chmury, które z czasem znowu całkiem się rozwiewały. 
-        Nieliczni potrafili zatrzymać je przy sobie na dłużej. Moja mgła nie dość, że trzymała się mnie nieustannie (nie noszę jej
-        w dzbanie żeby jej nie starcić, tylko żeby ją schować - kiedy nie mam dzbanu, nieustannie lata wokół mnie), ale również do mnie szeptała.
-        Od miesięcy planowałem ucieczkę z klasztoru, z którego korupcją nie mogłem się pogodzięć i o którym wiedziałem, że tai
-        prawdziwą wiedze przed własnymi uczniami. Moja decyzja musiała jednak przyspieszyć po tym, jak przy pomocy podszeptów mgły,
-        odkryłem jak przybrać jej kształt. Kiedy oplotłem się chmurami, znalazłem się jedną nogą w świecie mgły - widziałem go i słyszałem. Okazało się jednak, że z
-        zewnątrz bardzo pryzpominam innym mnichom potwora, z którego obecności próbowali leczyć świat. Wiedziałem, że nie jestem potworem.
-        Uciekłem natychmiast. Muszę zrozumieć mgłę.
-      </Text>
       {cards.length > 0 && cards.map(card => (
         <Box className={classes.cardContainer} style={{ backgroundImage: `url(${card.backgroundImg}` }}>
           <Box>

@@ -1,10 +1,20 @@
-import React from "react";
-import { Group, createStyles, Text, Box } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
-import { Champion } from "../../Models/Models";
 import * as championActions from "../../redux/actions/champion/championActions";
-import { RootState } from "../../redux/store/store";
+
+import {
+  Box,
+  Button,
+  Group,
+  Input,
+  Modal,
+  Text,
+  createStyles,
+} from "@mantine/core";
+import React, { useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Champion } from "../../Models/Models";
+import { RootState } from "../../redux/store/store";
 import { db } from "../../firabase/sdk";
 
 const useStyles = createStyles(() => ({
@@ -24,6 +34,12 @@ const useStyles = createStyles(() => ({
   btnsGroup: {
     gap: "0px",
   },
+  modalContentContainer: {
+    width: "max-content",
+  },
+  moneyInput: {
+    marginBottom: "1rem",
+  },
 }));
 
 type IProps = {
@@ -34,19 +50,42 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const { classes } = useStyles();
-  const canUserChangeChamp = user.email === champ.user && user.role === "BG";
+  // const canUserChangeChamp = user.email === champ.user && user.role === "BG";
+  const canUserChangeChamp = true;
+  const [showModal, setShowModal] = useState(false);
+  const [operation, setOperation] = useState("");
+  const [money, setMoney] = useState(0);
 
   const updateMoneyInDb = async (operation: string) => {
     const docRef = doc(db, "Champions", champ.id);
     const data = {
       money:
         operation === "add"
-          ? parseInt(champ.money.toString()) + 1
-          : parseInt(champ.money.toString()) === 0
+          ? champ.money + money
+          : champ.money - money <= 0
           ? 0
-          : champ.money - 1,
+          : champ.money - money,
     };
     await updateDoc(docRef, data);
+  };
+
+  const updateMoney = () => {
+    if (money > 0) {
+      updateMoneyInDb(operation);
+      dispatch(championActions.changeMoney(champ.user, operation, money));
+    }
+    closeModal();
+  };
+
+  const openModal = (op: "add" | "sub") => {
+    setOperation(op);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setOperation("");
+    setMoney(0);
+    setShowModal(false);
   };
 
   return (
@@ -55,28 +94,44 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
       <Text className={classes.moneyBox}>{champ.money}g</Text>
       <Group className={classes.btnsGroup}>
         {canUserChangeChamp && (
-          <Text
-            className={classes.btn}
-            onClick={() => {
-              updateMoneyInDb("add");
-              dispatch(championActions.changeMoney(champ.user, "add"));
-            }}
-          >
+          <Text className={classes.btn} onClick={() => openModal("add")}>
             +
           </Text>
         )}
         {canUserChangeChamp && (
-          <Text
-            className={classes.btn}
-            onClick={() => {
-              updateMoneyInDb("sub");
-              dispatch(championActions.changeMoney(champ.user, "sub"));
-            }}
-          >
+          <Text className={classes.btn} onClick={() => openModal("sub")}>
             -
           </Text>
         )}
       </Group>
+      <Modal
+        centered
+        withCloseButton={false}
+        opened={showModal}
+        onClose={closeModal}
+        title={`How much money do you wan to ${
+          operation === "add" ? "add" : "subtract"
+        }`}
+      >
+        <Box className={classes.modalContentContainer}>
+          <Input.Wrapper label="Input label" className={classes.moneyInput}>
+            <Input
+              placeholder=""
+              type="number"
+              value={money === 0 ? '' : money}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setMoney(parseInt(event.currentTarget.value))
+              }
+            />
+          </Input.Wrapper>
+          <Group>
+            <Button onClick={updateMoney}>
+              {operation === "add" ? "Add" : "Subtract"}
+            </Button>
+            <Button onClick={closeModal}>No</Button>
+          </Group>
+        </Box>
+      </Modal>
     </Group>
   );
 };

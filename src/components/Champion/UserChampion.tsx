@@ -82,7 +82,7 @@ const UserChampion: React.FC<IProps> = ({ champ, setChamp, setUpdate }) => {
       {(user.email === champ.user || user.role === "MP") && (
         <p>Exp: {champ.exp}</p>
       )}
-      {location.pathname !== "/stats" && location.pathname !== "/" ? (
+      {location.pathname !== "/champions" && location.pathname !== "/" ? (
         <ChampionStats champ={champ} />
       ) : (
         <ChampionNewStats champ={champ} setUpdate={setUpdate ?? null} />

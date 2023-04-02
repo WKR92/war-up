@@ -56,10 +56,10 @@ export const addItem = (
   };
 };
 
-export const changeMoney = (champUser: string, operation: string) => {
+export const changeMoney = (champUser: string, operation: string, money: number) => {
   return {
     type: CHANGE_MONEY,
-    payload: { champUser, operation },
+    payload: { champUser, operation, money },
   };
 };
 
