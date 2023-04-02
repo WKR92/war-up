@@ -50,8 +50,7 @@ const ChampionMoney: React.FC<IProps> = ({ champ }) => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const { classes } = useStyles();
-  // const canUserChangeChamp = user.email === champ.user && user.role === "BG";
-  const canUserChangeChamp = true;
+  const canUserChangeChamp = user.email === champ.user && user.role === "BG";
   const [showModal, setShowModal] = useState(false);
   const [operation, setOperation] = useState("");
   const [money, setMoney] = useState(0);

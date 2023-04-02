@@ -68,7 +68,10 @@ export default function championsReducer(
       if (action.payload.operation === "add")
         newState[index].money = parseInt(newState[index].money.toString()) + action.payload.money;
       if (action.payload.operation === "sub") {
-        if (newState[index].money - action.payload.money <= 0) return [...newState];
+        if (newState[index].money - action.payload.money <= 0)  {
+          newState[index].money = 0;
+          return [...newState]
+        }
         newState[index].money = newState[index].money - action.payload.money;
       }
       return [...newState];

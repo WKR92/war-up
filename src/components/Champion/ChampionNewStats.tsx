@@ -53,8 +53,7 @@ const ChampionNewStats: React.FC<IProps> = ({ champ, setUpdate }) => {
   const [showModal, setShowModal] = useState(false);
   const [attribute, setAttribute] = useState("");
   const [prize, setPrize] = useState(0);
-  const canUserChangeChamp = true;
-  // user.email === champ.user && user.role === "BG";
+  const canUserChangeChamp = user.email === champ.user && user.role === "BG";
 
   const rows = elements.map((element) => (
     <tr key={element.stat}>
