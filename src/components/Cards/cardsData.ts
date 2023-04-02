@@ -44,8 +44,8 @@ export const zonnCardsData = [
         mainImg: 'https://i.pinimg.com/564x/88/c8/25/88c825ecb465ad0582f70aaa70b2ba41.jpg',
         type: 'Przedmiot',
         description1: 'Zasięg ⬡; Obrażenia: S-3 + 1k6',
-        description2: 'Krytyk: nakładasz truciznę',
-        cost: '2',
+        description2: 'Nakładasz truciznę | ODP; Trucizna: 2 obrażeń przez 2 tury',
+        cost: '1',
         cooldown: '0',
         backgroundImg: 'https://images.unsplash.com/photo-1585508889431-a1d0d9c5a324?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
     },
@@ -53,8 +53,8 @@ export const zonnCardsData = [
         name: 'Skryta kusza',
         mainImg: 'https://i.pinimg.com/564x/24/e6/10/24e610d9283adfd2ddc523fc459bc4d0.jpg',
         type: 'Akcja',
-        description1: 'Możesz mieć ją ukrytą pod rękawem. Przechowuje do 3 bełtów.',
-        description2: 'Obrażenia: 1k6',
+        description1: 'Możesz mieć ją ukrytą pod rękawem. Nie trzeba wyjmować. Przechowuje do 3 bełtów. Możesz używać ręki, na której jest założona jak wolnej.',
+        description2: 'Obrażenia: 1k6; Przeładowanie: 1 akcja',
         cost: '1',
         cooldown: '0',
         backgroundImg: 'https://images.unsplash.com/photo-1585508889431-a1d0d9c5a324?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
@@ -73,11 +73,10 @@ export const zonnCardsData = [
         name: 'Skórzany pas',
         mainImg: 'https://i.pinimg.com/564x/49/1c/78/491c7822d23b358ea96e27a6a3b16afe.jpg',
         type: 'Przedmiot',
-        description1: '+1 do testów na krzepę i równowagę',
-        description2: '',
+        description1: '+1 do testów na krzepę i równowagę.',
+        description2: 'Możesz przechowywac na nim do 3 fiolek/zwojów/małych przedmiotów - ich wyciągnięcie kosztuje 0',
         cost: '-',
         cooldown: '-',
         backgroundImg: 'https://images.unsplash.com/photo-1585508889431-a1d0d9c5a324?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
     },
 ]
-
