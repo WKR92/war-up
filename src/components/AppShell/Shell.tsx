@@ -107,6 +107,14 @@ const Shell: React.FC<IProps> = ({ children }) => {
               rightSection={<IconChevronRight size={16} stroke={2} />}
             />
             <NavLink
+              onClick={() => {
+                changePath("/cards");
+              }}
+              label="Cards"
+              icon={<IconActivity size={16} stroke={2} />}
+              rightSection={<IconChevronRight size={16} stroke={2} />}
+            />
+            <NavLink
               onClick={async () => {
                 await logOut();
               }}
