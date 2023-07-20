@@ -10,7 +10,7 @@ export const userLoggedIn = (user: User) => {
       uid: user.uid,
       displayName: user.displayName,
       photoUrl: user.photoURL,
-      role: user.email === 'w.k.r.1992@gmail.com' ? 'MP' : 'BG'
+      role: user.email === 'kris.galinski@gmail.com' ? 'MP' : 'BG'
     }
   }
 }

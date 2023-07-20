@@ -149,8 +149,6 @@ const ChampionNewStats: React.FC<IProps> = ({ champ, setUpdate }) => {
     if (value && value >= 16) prize = 400;
     if (stat === "ZYW") prize = 150;
     if (stat === "PP") prize = 600;
-    const fixed = ["MAG"];
-    if (fixed.includes(stat)) prize = 300;
     setPrize(prize);
   };
 

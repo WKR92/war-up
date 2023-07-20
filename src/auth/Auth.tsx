@@ -1,6 +1,7 @@
 import * as userActions from "../redux/actions/user/userActions";
 
 import { Box, Button, TextInput, createStyles } from "@mantine/core";
+import { auth, provider } from "../firabase/sdk";
 import { getStore, setStore } from "../services/storageService";
 import {
   isSignInWithEmailLink,
@@ -10,9 +11,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
+import GoogleIcon from "../assets/images/google_icon.png";
 import { RootState } from "../redux/store/store";
-import { auth } from "../firabase/sdk";
 import { showNotification } from "@mantine/notifications";
+import { signInWithPopup } from "firebase/auth";
 
 const useStyles = createStyles(() => ({
   wrapper: {
@@ -75,6 +77,18 @@ const useStyles = createStyles(() => ({
     width: "100%",
     marginTop: "1rem",
   },
+  googleSignInBtn: {
+    marginTop: "2rem",
+    width: "300px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  googleIcon: {
+    width: "26px",
+    height: "26px",
+    marginRight: "10px"
+  },
 }));
 
 export default function Auth() {
@@ -82,6 +96,22 @@ export default function Auth() {
   const { classes } = useStyles();
   const [email, setEmail] = useState("");
   const user = useSelector((state: RootState) => state.user);
+
+  const handleGoogleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setEmail("");
+        window.localStorage.removeItem("emailForSignIn");
+        dispatch(userActions.userLoggedIn(user));
+        showNotification({
+          message: "Successfully logged in",
+          autoClose: 5000,
+          color: "green",
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   const sendEmailLink = async () => {
     const actionCodeSettings = {
@@ -106,7 +136,7 @@ export default function Auth() {
   const checkIfSignedInWithEmailLink = async () => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = getStore("emailForSignIn") || "";
-      console.log('email', email)
+      console.log("email", email);
       if (!email) {
         email =
           window.prompt("Please provide your email for confirmation") || "";
@@ -150,6 +180,18 @@ export default function Auth() {
           onClick={async () => await sendEmailLink()}
         >
           Send me log in link
+        </Button>
+        <Button
+          className={classes.googleSignInBtn}
+          onClick={handleGoogleSignIn}
+        >
+          {" "}
+          <img
+            className={classes.googleIcon}
+            src={GoogleIcon}
+            alt="google icon"
+          />
+          Sign in with Google
         </Button>
       </Box>
     </Box>
